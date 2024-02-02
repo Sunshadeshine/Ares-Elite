@@ -1,23 +1,22 @@
 import React, { useState } from "react";
-import { Button, Form } from "react-bootstrap";
-import BootstrapModal from "../../layout/BootstrapModal";
+import { Button, Form, Spinner } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { SendOtp, VerifyOtp } from "../../../features/apiCall";
+import BootstrapModal from "../../layout/Components/BootstrapModal";
 import AuthLayout from "../AuthLayout";
 
 const ForgotPassword = () => {
   const [showModal, setShowModal] = useState(false);
-  const [values, setValues] = useState({
-    email: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
+  const [email, setEmail] = useState("");
+  const dispatch = useDispatch();
+  const { isFetching } = useSelector((state) => state.auth);
+  const handleSendOtp = async () => {
+    if (await SendOtp(dispatch, { email })) {
+      setShowModal(true);
+    }
   };
-
-  const handleSendOtp = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
   return (
@@ -31,13 +30,19 @@ const ForgotPassword = () => {
           type="email"
           name="email"
           placeholder="Email"
-          onChange={handleChange}
-          value={values.email}
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
           className="mb-3 "
         />
-        <Button className="purple-button w-100" onClick={handleSendOtp}>
-          Next
-        </Button>
+        {isFetching ? (
+          <Button type="submit" className="purple-button w-100">
+            <Spinner animation="border" variant="light" />
+          </Button>
+        ) : (
+          <Button className="purple-button w-100" onClick={handleSendOtp}>
+            Next
+          </Button>
+        )}
       </section>
       <section className="illustration-container">
         <img
@@ -46,32 +51,49 @@ const ForgotPassword = () => {
           style={{ width: "300px", height: "auto" }}
         />
       </section>
+      {email.length > 0 && (
+        <BootstrapModal
+          showModal={showModal}
+          handleClose={handleClose}
+          modalTitle={""}
+          modalContent={<ModalContent email={email} />}
+          // className="check_your_modal_container"
+        />
+      )}
 
-      <BootstrapModal
-        showModal={showModal}
-        handleClose={handleClose}
-        modalTitle={""}
-        modalContent={<ModalContent />}
-        className="check_your_modal_container"
-      />
+      <ToastContainer position="top-center" />
     </AuthLayout>
   );
 };
 
 export default ForgotPassword;
 
-const ModalContent = () => {
-  const [otp, setOtp] = useState(["", "", "", ""]);
-
+const ModalContent = ({ email }) => {
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleOtpChange = (index, value) => {
-    // Update the OTP array with the new value
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
 
-    // Move to the next input field if the current one is filled
     if (value && index < 5) {
       document.getElementById(`otp-input-${index + 1}`).focus();
+    }
+    if (newOtp.every((code) => code !== "")) {
+      sendOtpRequest(newOtp.join(""));
+    }
+  };
+  const sendOtpRequest = async (otpValue) => {
+    if (email) {
+      try {
+        if (await VerifyOtp(dispatch, { email: email, code: otpValue })) {
+          navigate("/update-password", { state: email });
+        }
+      } catch (error) {
+        // Handle any errors that might occur during the OTP verification
+        console.error("Error during OTP verification:", error);
+      }
     }
   };
   return (
@@ -83,7 +105,7 @@ const ModalContent = () => {
           Please open the link in the email to continue <br />
           or Enter the verification code we sent to{" "}
         </p>
-        <h6>emmawatson@gmail.com</h6>
+        <h6>{email}</h6>
       </div>
 
       {/* <Form.Control /> */}
@@ -101,8 +123,12 @@ const ModalContent = () => {
         ))}
       </div>
       <p>Resend (60s)</p>
-      <p>Need Help</p>
-      <button type="submit" className="purple-button w-50">
+      <p style={{ fontSize: "12px" }}>Need Help ?</p>
+      <button
+        type="submit"
+        className="purple-button w-50"
+        style={{ zIndex: "-2" }}
+      >
         Update Password{" "}
       </button>
     </section>

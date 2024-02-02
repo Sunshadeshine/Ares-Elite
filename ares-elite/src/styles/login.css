@@ -88,6 +88,11 @@ body {
 .forgot-password p {
   font-size: 14px;
 }
+@media only screen and (max-width: 600px) {
+  .form-control {
+    width: 100% !important;
+  }
+}
 .form-control {
   width: 407px;
   height: 48px;
@@ -122,14 +127,7 @@ body {
     var(--white-80, rgba(255, 255, 255, 0.8));
   box-shadow: 0px 0px 11px 3px rgba(0, 0, 0, 0.25);
 }
-.modal-content:has(.check-your-inbox) {
-  /* Styles for modal-content when it contains the check-your-inbox class */
-  width: 500px;
-  height: 550px;
-  position: absolute;
-  top: 152px;
-  left: 155px;
-}
+
 .check-your-box-texts {
   gap: var(--24, 14);
   flex-direction: column;

@@ -1,12 +1,16 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
-import { ToastContainer } from "react-toastify";
 
 const AuthLayout = ({ children }) => {
   return (
-    <div>
+    <div className="">
       <Row>
-        <Col sm={12} md={4} style={{ flexBasis: "calc(25% - 10px)" }}>
+        <Col
+          sm={12}
+          md={4}
+          style={{ flexBasis: "calc(25% - 10px)" }}
+          className="auth-layout"
+        >
           <img
             className="w-100 vh-100"
             src="images/loginDoctor.png"
@@ -15,8 +19,8 @@ const AuthLayout = ({ children }) => {
         </Col>
         <Col sm={12} md={8} style={{ flexBasis: "calc(75% - 10px)" }}>
           <div className="d-flex align-items-center justify-content-center vh-100">
-            <main style={{ width: "407px" }}>{children}</main>
-            <ToastContainer position="top-center" />
+            <main className="sign-in-container">{children}</main>
+            {/* <ToastContainer position="top-center" /> */}
           </div>
         </Col>
       </Row>

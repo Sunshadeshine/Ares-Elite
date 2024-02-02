@@ -1,14 +1,13 @@
 import React from "react";
 
 import DoctorMenu from "../components/layout/DoctorMenu";
-import DoctorServices from "../components/layout/DoctorServices";
+import DoctorSelectUser from "../components/layout/DoctorSelectUser";
 import DoctorTodayAppointment from "../components/layout/DoctorTodayAppointment";
 const DoctorSelectUserType = () => {
   return (
     <DoctorMenu>
-      <div className="d-flex Doctor-home justify-content-between flex-wrap">
-        {/* <DoctorSelectUser /> */}
-        <DoctorServices />
+      <div className="d-flex Doctor-home justify-content-around flex-wrap">
+        <DoctorSelectUser />
 
         <DoctorTodayAppointment />
       </div>
