@@ -4,7 +4,7 @@ import SignUp from "./components/auth/SignUp";
 import UpdatePassword from "./components/auth/password/UpdatePassword";
 import ForgotPassword from "./components/auth/password/forgotPassword";
 import AtheProfile from "./components/layout/AtheProfileLayout";
-import DoctorTraining from "./components/layout/DoctorTrainingComponent";
+import DoctorTrainingServices from "./components/layout/DoctorTrainingSession/DoctorTrainingServices";
 import AtheBookings from "./pages/AtheBookings";
 import Account from "./pages/AtheProfileNavigations/Account";
 import EditProfile from "./pages/AtheProfileNavigations/EditProfile";
@@ -63,6 +63,10 @@ function App() {
             <Route
               path="dashboard/doctor-service-selection"
               element={<DoctorServiceSelection />}
+            />{" "}
+            <Route
+              path="dashboard/doctor-service-selection/training"
+              element={<DoctorTrainingServices />}
             />
             <Route
               path="dashboard/doctor-inoffice"
@@ -80,7 +84,6 @@ function App() {
               path="dashboard/appointment"
               element={<DoctorAppointment />}
             />
-            <Route path="dashboard/training" element={<DoctorTraining />} />
             {/* <Route path="/recent-evaluation" element={<RecentEvaluation />} /> */}
             <Route
               path="dashboard/recent-evaluation2"

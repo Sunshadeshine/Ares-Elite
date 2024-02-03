@@ -146,6 +146,9 @@ tbody {
 .recent-bookings-cont tr td {
   background-color: #f2f8fc !important;
 }
+.recent-bookings-head .form-control {
+  width: 80% !important;
+}
 @media only screen and (max-width: 600px) {
   .frame {
     width: 90vw !important;

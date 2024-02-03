@@ -35,8 +35,10 @@ const DoctorServices = () => {
         break;
 
       case "TrainingSessions":
+        // alert("hi");
         // Logic for TrainingSessions service
         // You can navigate or perform other actions specific to this service
+        navigate("/doctor/dashboard/doctor-service-selection/training");
         break;
 
       case "ConcussionEval":
