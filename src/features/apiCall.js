@@ -124,11 +124,12 @@ export const GetProfileDetails = async (dispatch) => {
     return false; // Return false to indicate that the request failed
   }
 };
-export const GetTodayAppointmentDetails = async (dispatch) => {
+export const GetTodayAppointmentDetails = async (dispatch, todayDate) => {
   const token = localStorage.getItem("userToken");
   dispatch(FetchStart());
   try {
-    const { data } = await axios.get("/api/doctor/recent-bookings", {
+    const { data } = await axios.get("/api/doctor/appointments", {
+      params: { date: todayDate },
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log(data);
@@ -141,15 +142,20 @@ export const GetTodayAppointmentDetails = async (dispatch) => {
     return false; // Return false to indicate that the request failed
   }
 };
+
 export const GetRecentPrescriptions = async (
   dispatch,
-  { currentPage, pageSize }
+  { currentPage, pageSize, selectedDate }
 ) => {
   const token = localStorage.getItem("userToken");
   dispatch(FetchStart());
   try {
     const { data } = await axios.get("/api/doctor/recent-prescriptions", {
-      params: { page_no: currentPage, per_page_count: pageSize },
+      params: {
+        page_no: currentPage,
+        per_page_count: pageSize,
+        date: selectedDate,
+      },
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log(data);
@@ -164,13 +170,19 @@ export const GetRecentPrescriptions = async (
 };
 export const GetRecentBookings = async (
   dispatch,
-  { currentPage, pageSize }
+  { currentPage, pageSize, selectedStatus, selectedServiceTypes, selectedDate }
 ) => {
-  const token = localStorage.getItem("userToken");
   dispatch(FetchStart());
+  const token = localStorage.getItem("userToken");
   try {
     const { data } = await axios.get("/api/doctor/recent-bookings", {
-      params: { page_no: currentPage, per_page_count: pageSize },
+      params: {
+        page_no: currentPage,
+        per_page_count: pageSize,
+        status: selectedStatus,
+        service_type: selectedServiceTypes,
+        date: selectedDate,
+      },
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log(data);

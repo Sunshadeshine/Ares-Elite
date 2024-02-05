@@ -1,33 +1,61 @@
-import { default as React, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dropdown, Spinner, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import DoctorMenu from "../components/layout/DoctorMenu";
 import { GetRecentBookings } from "../features/apiCall";
 // import { Group } from "./Group";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const RecentBookings = () => {
   const bookings = useSelector((state) => state.fetch_app.bookings);
   const totalPages = useSelector((state) => state.fetch_app.totalPages);
   const isFetching = useSelector((state) => state.fetch_app.isFetching);
+  const [showDateInput, setShowDateInput] = useState(null);
+  const [selectedServiceTypes, setSelectedServiceTypes] = useState([]);
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedDate, setSelectedDate] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 8; // Number of items per page
+  const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+  const pageSize = isDesktop ? 8 : 9;
   const dispatch = useDispatch();
+  const fetchData = async () => {
+    try {
+      // Create an object to hold the parameters
+      const params = {
+        currentPage,
+        pageSize,
+      };
+
+      // Add parameters only if they are not empty
+      if (selectedStatus) {
+        params.selectedStatus = selectedStatus;
+      }
+
+      if (selectedServiceTypes.length > 0) {
+        params.selectedServiceTypes = selectedServiceTypes.toString();
+      }
+
+      if (selectedDate) {
+        // Format the date to 'yyyy-MM-dd'
+        const formattedDate = new Date(selectedDate).toLocaleDateString(
+          "en-CA"
+        );
+
+        params.selectedDate = formattedDate;
+      }
+
+      await GetRecentBookings(dispatch, params);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   useEffect(() => {
-    // Fetch data from your API here
-    const fetchData = async () => {
-      try {
-        await GetRecentBookings(dispatch, { currentPage, pageSize });
-        // setAppointments(data); // Assuming your API response is an array of appointments
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+    fetchData(); // Fetch data whenever currentPage changes
+  }, [currentPage, selectedDate, selectedStatus, selectedServiceTypes]);
 
-    fetchData();
-  }, [currentPage]);
   const startIndex = (currentPage - 1) * pageSize;
-  console.log(bookings);
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
@@ -38,7 +66,43 @@ const RecentBookings = () => {
     MedicalOfficeVisit: "Medical Office Visit",
     Consultation: "Consultation Call",
   };
+  const Status_ENUM_values = {
+    paid: "paid",
+    pending: "pending",
+    failed: "failed",
+    All: "All",
+  };
+  const handleServiceTypeFilter = (selectedServiceType) => {
+    setSelectedServiceTypes((prevSelectedServiceTypes) => {
+      const updatedServiceTypes = prevSelectedServiceTypes.includes(
+        selectedServiceType
+      )
+        ? prevSelectedServiceTypes.filter(
+            (type) => type !== selectedServiceType
+          )
+        : [...prevSelectedServiceTypes, selectedServiceType];
 
+      console.log(updatedServiceTypes);
+
+      // Update state before calling fetchData
+      setSelectedServiceTypes(updatedServiceTypes);
+
+      // fetchData(); // Call fetchData after state has been updated
+
+      return updatedServiceTypes;
+    });
+  };
+  const handleStatusFilter = (status) => {
+    if (status == "All") {
+      setSelectedStatus("");
+    } else {
+      setSelectedStatus(status);
+    }
+  };
+
+  const handleDateFilter = (date) => {
+    setSelectedDate(date);
+  };
   return (
     <DoctorMenu>
       <div className="p-3 main-wrapper mt-5 booking-presc">
@@ -100,24 +164,75 @@ const RecentBookings = () => {
               <thead className="table-head">
                 <tr>
                   <th style={{ paddingLeft: "20px" }}>
-                    Name <i className="fa-solid fa-sort" />
+                    <div>Name</div>
                   </th>
                   <th>
-                    Service Type <i className="fa-solid fa-filter" />
+                    <Dropdown>
+                      <Dropdown.Toggle variant="light" id="dropdown-basic">
+                        Select Service Types{" "}
+                        <i className="fa-solid fa-filter" />
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        {Object.keys(Service_ENUM_values).map((key) => (
+                          <Dropdown.Item key={key}>
+                            <input
+                              type="checkbox"
+                              id={key}
+                              checked={selectedServiceTypes.includes(key)}
+                              onChange={() => handleServiceTypeFilter(key)}
+                            />
+                            <label htmlFor={key}>
+                              {Service_ENUM_values[key]}
+                            </label>
+                          </Dropdown.Item>
+                        ))}
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </th>
                   <th>
-                    Date <i className="fa-solid fa-sort" />
+                    <div className="date-container">
+                      <div
+                        className="date-display "
+                        onClick={() => setShowDateInput(!showDateInput)}
+                      >
+                        {selectedDate === null
+                          ? "Date"
+                          : new Date(selectedDate).toLocaleDateString("en-CA")}
+                        <i className="fa-solid fa-sort" />
+                      </div>
+                      {showDateInput && (
+                        <DatePicker
+                          selected={selectedDate}
+                          onChange={(date) => {
+                            handleDateFilter(date);
+                            setShowDateInput(false);
+                          }}
+                        />
+                      )}
+                    </div>
                   </th>
+                  <th>Time</th>
+                  <th>Mobile Number</th>
                   <th>
-                    Time <i className="fa-solid fa-sort" />
+                    <Dropdown
+                      onSelect={(eventKey) => handleStatusFilter(eventKey)}
+                    >
+                      <Dropdown.Toggle variant="light" id="status-dropdown">
+                        {selectedStatus
+                          ? Status_ENUM_values[selectedStatus]
+                          : "Select Status"}
+                        <i className="fa-solid fa-filter" />
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        {Object.keys(Status_ENUM_values).map((status) => (
+                          <Dropdown.Item key={status} eventKey={status}>
+                            {Status_ENUM_values[status]}
+                          </Dropdown.Item>
+                        ))}
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </th>
-                  <th>
-                    Mobile Number <i className="fa-solid fa-sort" />
-                  </th>
-                  <th>
-                    Status <i className="fa-solid fa-filter" />
-                  </th>
-                  <th></th> {/* Empty th for three dots */}
+                  <th></th>
                 </tr>
               </thead>
 

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown, Spinner, Table } from "react-bootstrap";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import DoctorMenu from "../components/layout/DoctorMenu";
@@ -9,6 +11,8 @@ const RecentPrescriptions = () => {
   const prescriptions = useSelector((state) => state.fetch_app.prescriptions);
   const totalPages = useSelector((state) => state.fetch_app.totalPages);
   const isFetching = useSelector((state) => state.fetch_app.isFetching);
+  const [showDateInput, setShowDateInput] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 8; // Number of items per page
   const dispatch = useDispatch();
@@ -16,21 +20,36 @@ const RecentPrescriptions = () => {
   useEffect(() => {
     // Fetch data from your API here
     const fetchData = async () => {
+      if (selectedDate) {
+        // Format the date to 'yyyy-MM-dd'
+        const formattedDate = new Date(selectedDate).toLocaleDateString(
+          "en-CA"
+        );
+
+        setSelectedDate(formattedDate);
+      }
       try {
-        await GetRecentPrescriptions(dispatch, { currentPage, pageSize });
+        await GetRecentPrescriptions(dispatch, {
+          currentPage,
+          pageSize,
+          selectedDate,
+        });
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, [currentPage]);
+  }, [currentPage, selectedDate]);
   const startIndex = (currentPage - 1) * pageSize;
   console.log(prescriptions);
+
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
-
+  const handleDateFilter = (date) => {
+    setSelectedDate(date);
+  };
   return (
     <DoctorMenu>
       <div className="p-3 main-wrapper mt-5 booking-presc">
@@ -41,7 +60,10 @@ const RecentPrescriptions = () => {
                 Prescription Requests
               </h2>
             </div>
-            <div className="input-group mb-3 " style={{ width: "400px" }}>
+            <div
+              className="input-group mb-3 search-bar"
+              style={{ width: "400px" }}
+            >
               <input
                 type="text"
                 className="form-control"
@@ -89,7 +111,26 @@ const RecentPrescriptions = () => {
                     Mobile Number <i className="fa-solid fa-sort" />
                   </th>
                   <th>
-                    Date <i className="fa-solid fa-sort" />
+                    <div className="date-container">
+                      <div
+                        className="date-display "
+                        onClick={() => setShowDateInput(!showDateInput)}
+                      >
+                        {selectedDate === null
+                          ? "Date"
+                          : new Date(selectedDate).toLocaleDateString("en-CA")}
+                        <i className="fa-solid fa-sort" />
+                      </div>
+                      {showDateInput && (
+                        <DatePicker
+                          selected={selectedDate}
+                          onChange={(date) => {
+                            handleDateFilter(date);
+                            setShowDateInput(false);
+                          }}
+                        />
+                      )}
+                    </div>
                   </th>
                   <th>
                     Time <i className="fa-solid fa-sort" />

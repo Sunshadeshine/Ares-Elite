@@ -86,6 +86,8 @@ tbody {
 .main-wrapper table thead tr th {
   background: rgb(28, 14, 68, 0.9) !important;
   color: rgb(255, 255, 255) !important;
+  padding: 0 !important;
+  padding: 10px !important;
 }
 .main-wrapper table {
   text-align: center;
@@ -100,6 +102,27 @@ tbody {
 }
 .failed {
   background: rgba(234, 51, 75, 0.75);
+}
+.table-div-booking .dropdown-toggle,
+.table-div-booking .dropdown-toggle:hover,
+.table-div-booking .show > .btn-light.dropdown-toggle,
+.table-div-booking .show > .btn-light.dropdown-toggle:focus {
+  background-color: transparent;
+  color: white;
+  border: 0px;
+  border-radius: 0px;
+  box-shadow: none;
+  padding: 0px;
+}
+.table-div-booking {
+  overflow-y: scroll;
+  width: 100%;
+}
+.table-div-booking .react-datepicker-wrapper {
+  /* display: none; */
+}
+.table-div-booking .dropdown-toggle::after {
+  display: none;
 }
 .dropdown-toggle,
 .dropdown-toggle:hover {
@@ -144,11 +167,16 @@ tbody {
   text-align: start !important;
 }
 .recent-bookings-cont tr td {
+  /* height: 13px !important; */
+}
+.recent-bookings-cont tr td {
   background-color: #f2f8fc !important;
 }
-.recent-bookings-head .form-control {
-  width: 80% !important;
+
+.recent-booking-head .search-bar .form-control {
+  width: fit-content !important;
 }
+
 @media only screen and (max-width: 600px) {
   .frame {
     width: 90vw !important;
@@ -171,8 +199,8 @@ tbody {
     display: none;
   }
   .recent-bookings-cont {
-    height: 90vh !important;
-    overflow-y: scroll;
+    /* height: 90vh !important; */
+    /* overflow-y: scroll; */
     overflow-x: scroll !important;
     font-size: 12px;
   }
