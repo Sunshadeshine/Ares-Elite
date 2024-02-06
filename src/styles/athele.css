@@ -708,3 +708,30 @@ thead {
   padding: 10px;
   
 }
+
+.athel-SEV-modal{
+  height: 100vh;
+}
+.modal-dialog{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-content{
+   min-height: 50%;
+   background-color: #1B2C4F;
+   color:#FFFFFF;
+   border-radius: 39.97px;
+}
+
+.modal-header .btn-close {
+  color:#FFFFFF !important;
+}
+.modal-header {
+  border-bottom: none; /* Remove the bottom border from the modal header */
+}
+.modal-footer {
+  border-top: none; /* Remove the top border from the modal footer */
+  font-weight: 600;
+}

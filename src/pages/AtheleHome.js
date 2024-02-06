@@ -1,10 +1,15 @@
 import React from "react";
-import { Col, Container, Row, Table } from "react-bootstrap";
+import { Col, Container, Row, Table,Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import AtheleteMenu from "../components/layout/AtheleteMenu";
+import BootstrapModal from "../components/layout/Components/BootstrapModal";
 import "../styles/athele.css";
 import "../styles/athelehome.css";
 import "../styles/doctor.css";
+import { Pie } from 'react-chartjs-2';
+import { Chart, ArcElement } from 'chart.js';
+
+Chart.register(ArcElement);
 
 const AtheleHome = () => {
   const defaultValues = [
@@ -12,6 +17,124 @@ const AtheleHome = () => {
     new Date(2024, 0, 15),
     new Date(2024, 0, 20),
   ];
+
+  const options = {
+    aspectRatio: 1, // Set the aspect ratio to 1:1
+    responsive: true,
+    width: 100, // Set the width of the chart
+    height: 100 // Set the height of the chart
+    
+  };
+
+  const data = {
+    labels: ['Red', 'Blue', 'Yellow'],
+    datasets: [
+      {
+        label: 'My First Dataset',
+        data: [300, 500, 100],
+        backgroundColor: ["#5E3FBE","#F4F0FD","#E5DAFB","#CBB6F8"],
+        borderColor: 'rgba(0, 0, 0, 0)'
+      }
+    ]
+  };
+
+
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isModalOpenafter, setIsModalOpenafter] = React.useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleModal2=()=>{
+     setIsModalOpenafter(!isModalOpenafter)
+     
+  }
+  const modalContentafter=<div style={{width:"100%", display:"flex",flexDirection:"column",gap:"15px",height:"446px" ,overflowY:"scroll"}}> 
+  <div style={{display:"flex",gap:"3px",justifyContent:"space-between"}}>
+   <div> <Image src="https://static.generated.photos/vue-static/face-generator/landing/wall/14.jpg" style={{height:"50px",borderRadius:"100%"}} /></div>
+   <div><p style={{fontSize:"10px"}}>Congratulations Max on completing 24 Tele Training Sessions with Dr. Joe-your commitment to growth shines bright! 🌟</p></div>
+   <div style={{fontSize:"9px",textAlign:"end",display:"flex",alignItems:"flex-end"}}> <p>9:10</p></div>
+  </div>
+  
+  <div style={{display:"flex",gap:"3px",justifyContent:"space-between"}}>
+   <div> <Image src="https://static.generated.photos/vue-static/face-generator/landing/wall/14.jpg" style={{height:"50px",borderRadius:"100%"}} /></div>
+   <div><p style={{fontSize:"10px"}}>Congratulations Max on completing 24 Tele Training Sessions with Dr. Joe-your commitment to growth shines bright! 🌟</p></div>
+   <div style={{fontSize:"9px",textAlign:"end",display:"flex",alignItems:"flex-end"}}> <p>9:10</p></div>
+  </div>
+  <div style={{display:"flex",gap:"3px",justifyContent:"space-between"}}>
+   <div> <Image src="https://static.generated.photos/vue-static/face-generator/landing/wall/14.jpg" style={{height:"50px",borderRadius:"100%"}} /></div>
+   <div><p style={{fontSize:"10px"}}>Congratulations Max on completing 24 Tele Training Sessions with Dr. Joe-your commitment to growth shines bright! 🌟</p></div>
+   <div style={{fontSize:"9px",textAlign:"end",display:"flex",alignItems:"flex-end"}}> <p>9:10</p></div>
+  </div>
+  <div style={{display:"flex",gap:"3px",justifyContent:"space-between"}}>
+   <div> <Image src="https://static.generated.photos/vue-static/face-generator/landing/wall/14.jpg" style={{height:"50px",borderRadius:"100%"}} /></div>
+   <div><p style={{fontSize:"10px"}}>Congratulations Max on completing 24 Tele Training Sessions with Dr. Joe-your commitment to growth shines bright! 🌟</p></div>
+   <div style={{fontSize:"9px",textAlign:"end",display:"flex",alignItems:"flex-end"}}> <p>9:10</p></div>
+  </div>
+  <div style={{display:"flex",gap:"3px",justifyContent:"space-between"}}>
+   <div> <Image src="https://static.generated.photos/vue-static/face-generator/landing/wall/14.jpg" style={{height:"50px",borderRadius:"100%"}} /></div>
+   <div><p style={{fontSize:"10px"}}>Congratulations Max on completing 24 Tele Training Sessions with Dr. Joe-your commitment to growth shines bright! 🌟</p></div>
+   <div style={{fontSize:"9px",textAlign:"end",display:"flex",alignItems:"flex-end"}}> <p>9:10</p></div>
+  </div>
+  <div style={{display:"flex",gap:"3px",justifyContent:"space-between"}}>
+   <div> <Image src="https://static.generated.photos/vue-static/face-generator/landing/wall/14.jpg" style={{height:"50px",borderRadius:"100%"}} /></div>
+   <div><p style={{fontSize:"10px"}}>Congratulations Max on completing 24 Tele Training Sessions with Dr. Joe-your commitment to growth shines bright! 🌟</p></div>
+   <div style={{fontSize:"9px",textAlign:"end",display:"flex",alignItems:"flex-end"}}> <p>9:10</p></div>
+  </div>
+  <div style={{display:"flex",gap:"3px",justifyContent:"space-between"}}>
+   <div> <Image src="https://static.generated.photos/vue-static/face-generator/landing/wall/14.jpg" style={{height:"50px",borderRadius:"100%"}} /></div>
+   <div><p style={{fontSize:"10px"}}>Congratulations Max on completing 24 Tele Training Sessions with Dr. Joe-your commitment to growth shines bright! 🌟</p></div>
+   <div style={{fontSize:"9px",textAlign:"end",display:"flex",alignItems:"flex-end"}}> <p>9:10</p></div>
+  </div>
+  <div style={{display:"flex",gap:"3px",justifyContent:"space-between"}}>
+   <div> <Image src="https://static.generated.photos/vue-static/face-generator/landing/wall/14.jpg" style={{height:"50px",borderRadius:"100%"}} /></div>
+   <div><p style={{fontSize:"10px"}}>Congratulations Max on completing 24 Tele Training Sessions with Dr. Joe-your commitment to growth shines bright! 🌟</p></div>
+   <div style={{fontSize:"9px",textAlign:"end",display:"flex",alignItems:"flex-end"}}> <p>9:10</p></div>
+  </div>
+  
+  </div>
+
+  const modalContent=<div style={{width:"100%"}}> 
+  <div>
+    <div style={{display:"flex",justifyContent:"space-between",height:"10px"}}> <p>Tele Trainings</p> <p>16</p></div>
+    <hr/>
+  </div>
+  <div>
+    <div style={{display:"flex",justifyContent:"space-between",height:"10px"}}> <p>Medical office Visit</p> <p>16</p></div>
+    <hr/>
+  </div>
+  <div>
+    <div style={{display:"flex",justifyContent:"space-between",height:"10px"}}> <p>Post Concussion</p> <p>16</p></div>
+    <hr/>
+  </div>
+  <div>
+    <div style={{display:"flex",justifyContent:"space-between",height:"10px"}}> <p>Sports Vision Evaluation</p> <p>16</p></div>
+    <hr/>
+  </div>
+  <div>
+    <div style={{display:"flex",justifyContent:"space-between",height:"10px"}}> <p>In Office Trainings</p> <p>0</p></div>
+    <hr/>
+  </div>
+  <div style={{height:"200px",widht:"100%",display:"flex",alignItems:"center",justifyContent:"center"}}>
+  <Pie data={data}   options={options} />
+  </div>
+
+ 
+  </div>
+
+  const modalFooter=<>
+  <button style={{padding:"16px 20px 16px 20px",width:"250px",background:"white",color:"black",borderRadius:"37px",fontWeight:"600px"}} onClick={handleModal2}>
+    View Acheivements
+  </button>
+  </>
+  
+   
+  
 
   return (
     <AtheleteMenu>
@@ -63,8 +186,11 @@ const AtheleHome = () => {
                   <div>
                     <span style={{ color: "#CCC" }}>Tele Sessions</span>
                     <br />
-                    <h3 className="mt-3 text-white">Total - 6</h3>
-                    <h3 className="text-white">Remaining- 4 </h3>
+                    {
+                      true ? <><h3 className="mt-3 text-white">No Active Plans</h3></>:<>  <h3 className="mt-3 text-white">Total - 6</h3>
+                      <h3 className="text-white">Remaining- 4 </h3></>
+                    }
+                  
                   </div>
                   <div>
                     <img src="/images/icon/percent.svg" height={120} />
@@ -82,13 +208,14 @@ const AtheleHome = () => {
                       sm={6}
                       style={{ backgroundColor: "#57315A" }}
                       className="text-light mb-4 d-flex justify-content-between  align-items-center"
+                      onClick={openModal}
                     >
                       <img
                         src="/images/icon/sportsvison.svg"
                         className="service-cont-icon"
                         style={{height:"60%"}}
                       />
-                      <div style={{ width: "60%" }}>
+                      <div style={{ width: "60%" }} >
                         <h7>Sports Vision Evaluation</h7>
                         <p>
                           {" "}
@@ -346,6 +473,9 @@ const AtheleHome = () => {
             </Col>
           </Row>
         </Container>
+        <BootstrapModal  showModal={isModalOpen} handleClose={closeModal}  modalContent={modalContent} modalFooter={modalFooter} css="black"/>
+        <BootstrapModal  showModal={isModalOpenafter} handleClose={handleModal2} modalContent={modalContentafter} css="black"/>
+
       </section>
     </AtheleteMenu>
   );
