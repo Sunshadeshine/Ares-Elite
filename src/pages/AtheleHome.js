@@ -181,20 +181,31 @@ const AtheleHome = () => {
                   style={{
                     background: "#1B2C4F",
                   }}
-                  className=" rounded-4 p-4 d-flex justify-content-between"
+                  className=" rounded-4 p-4 "
                 >
                   <div>
+                    <div style={{display:"flex",justifyContent:"space-between",width:"100%"}}>
                     <span style={{ color: "#CCC" }}>Tele Sessions</span>
+                    <span style={{ color: "#FFFF" }}> View All</span>
+
+                    </div>
+                    
                     <br />
+                    <div className="d-flex justify-content-between">
                     {
-                      true ? <><h3 className="mt-3 text-white">No Active Plans</h3></>:<>  <h3 className="mt-3 text-white">Total - 6</h3>
-                      <h3 className="text-white">Remaining- 4 </h3></>
+                      false ? <><h3 className="mt-3 text-white">No Active Plans</h3></>:<div> <h3 className="mt-3 text-white">Total - 6</h3>
+                      <h3 className="text-white">Remaining- 4 </h3></div>
                     }
-                  
-                  </div>
-                  <div>
+
+                    <div>
                     <img src="/images/icon/percent.svg" height={120} />
                   </div>
+
+                    </div>
+                    
+                  
+                  </div>
+                  
                 </Col>
               </Row>
               <Row>
