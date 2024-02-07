@@ -1,10 +1,10 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import DoctorMenu from "../components/layout/DoctorMenu";
+import AtheleteMenu from "../components/layout/AtheleteMenu";
 
 const PrivacyPolicy = () => {
   return (
-    <DoctorMenu>
+    <AtheleteMenu>
       <Container
         style={{
           padding: "5px 50px",
@@ -115,7 +115,7 @@ const PrivacyPolicy = () => {
           </p>
         </div>
       </Container>
-    </DoctorMenu>
+    </AtheleteMenu>
   );
 };
 
