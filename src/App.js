@@ -14,13 +14,14 @@ import Athedrill from "./pages/Athedrill";
 import AtheleHome from "./pages/AtheleHome";
 import DoctorAppointment from "./pages/DoctorAppointment";
 import DoctorConsultationCall from "./pages/DoctorConsultationCall";
+import DoctorForm from "./pages/DoctorForm";
 import DoctorSelectUserType from "./pages/DoctorHome";
 import DoctorInOffice from "./pages/DoctorInOffice";
 import DoctorPlansPackages from "./pages/DoctorPlansPackages";
-import DoctorPrescriptionForm from "./pages/DoctorPrescriptionForm";
 import DoctorProfile from "./pages/DoctorProfile";
 import DoctorServiceSelection from "./pages/DoctorServiceSelection";
-import Step1 from "./pages/Forms/Client Information/Step1";
+// import Step1 from "./pages/Forms/Client Information/Step1";
+import Client_Form from "./pages/Forms/Client_Form";
 import PageNotFound from "./pages/PageNotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import RecentBookings from "./pages/RecentBookings";
@@ -56,9 +57,7 @@ function App() {
 
           <Route path="/doctor" element={<ProtectedRoute />}>
             <Route path="dashboard" element={<DoctorSelectUserType />} />
-            <Route path="dashboard/client_form" element={<Step1 />} />
-            {/* <Route path="/step2" element={<Step2 />} />
-            <Route path="/step3" element={<Step3 />} /> */}
+            <Route path="dashboard/client_form" element={<Client_Form />} />
             <Route path="dashboard/profile" element={<DoctorProfile />} />
             <Route
               path="dashboard/doctor-service-selection"
@@ -94,8 +93,12 @@ function App() {
               element={<RecentPrescriptions />}
             />{" "}
             <Route
-              path="dashboard/start-prescription"
-              element={<DoctorPrescriptionForm />}
+              path="dashboard/start-prescription/:client_id"
+              element={<DoctorForm form="pres" />}
+            />{" "}
+            <Route
+              path="dashboard/start-evaluation"
+              element={<DoctorForm form="eval" />}
             />
             <Route
               path="dashboard/recent-bookings"

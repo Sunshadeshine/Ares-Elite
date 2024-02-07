@@ -106,7 +106,11 @@ tbody {
 .table-div-booking .dropdown-toggle,
 .table-div-booking .dropdown-toggle:hover,
 .table-div-booking .show > .btn-light.dropdown-toggle,
-.table-div-booking .show > .btn-light.dropdown-toggle:focus {
+.table-div-booking .show > .btn-light.dropdown-toggle:focus,
+.table-div .dropdown-toggle,
+.table-div .dropdown-toggle:hover,
+.table-div .show > .btn-light.dropdown-toggle,
+.table-div .show > .btn-light.dropdown-toggle:focus {
   background-color: transparent;
   color: white;
   border: 0px;

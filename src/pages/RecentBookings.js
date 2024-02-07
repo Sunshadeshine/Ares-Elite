@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Dropdown, Spinner, Table } from "react-bootstrap";
+import { Dropdown, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import DoctorMenu from "../components/layout/DoctorMenu";
 import { GetRecentBookings } from "../features/apiCall";
 // import { Group } from "./Group";
 import DatePicker from "react-datepicker";
+
 import "react-datepicker/dist/react-datepicker.css";
+import Loader from "../components/layout/Components/Loader";
 
 const RecentBookings = () => {
   const bookings = useSelector((state) => state.fetch_app.bookings);
@@ -240,7 +242,7 @@ const RecentBookings = () => {
                 <>
                   {" "}
                   <tbody className="recent-bookings-cont">
-                    {bookings.length > 0 ? (
+                    {bookings && bookings.length > 0 ? (
                       <>
                         {" "}
                         {bookings.map((booking, index) => (
@@ -384,7 +386,8 @@ const RecentBookings = () => {
                     </tr>{" "}
                     <tr></tr>
                   </tbody> */}
-                  <Spinner className="m-auto" />
+                  {/* <Spinner className="m-auto" /> */}
+                  <Loader />
                 </>
               )}
             </Table>

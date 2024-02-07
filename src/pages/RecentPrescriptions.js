@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Dropdown, Spinner, Table } from "react-bootstrap";
+import { Dropdown, Table } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Loader from "../components/layout/Components/Loader";
 import DoctorMenu from "../components/layout/DoctorMenu";
 import { GetRecentPrescriptions } from "../features/apiCall";
 
@@ -143,7 +144,7 @@ const RecentPrescriptions = () => {
               {!isFetching ? (
                 <>
                   {" "}
-                  {prescriptions.length > 0 ? (
+                  {prescriptions && prescriptions.length > 0 ? (
                     <>
                       {" "}
                       <tbody className="recent-bookings-cont">
@@ -181,7 +182,9 @@ const RecentPrescriptions = () => {
                             </td> */}
                             <td className="status ">
                               <div className="StartEvaluation w-75">
-                                <Link to="/doctor/dashboard/start-prescription">
+                                <Link
+                                  to={`/doctor/dashboard/start-prescription/${booking?.client?.client_id}`}
+                                >
                                   Start Prescription
                                 </Link>
                               </div>
@@ -199,7 +202,7 @@ const RecentPrescriptions = () => {
                 </>
               ) : (
                 <>
-                  <Spinner className="m-auto" />
+                  <Loader />
                 </>
               )}
             </Table>

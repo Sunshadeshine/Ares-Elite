@@ -1,3 +1,4 @@
+import moment from "moment"; // Import moment for date manipulation
 import React, { useEffect, useState } from "react";
 import { Button, Form, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,17 +11,21 @@ import { appointment } from "../features/apiCall";
 
 const DoctorAppointment = () => {
   const navigate = useNavigate();
+  const doctors = useSelector((state) => state.fetch_app.doctors);
   const [selectedService, setSelectedService] = useState("");
   const { isFetching } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [formValid, setFormValid] = useState(false);
+  const [disabledDates, setDisabledDates] = useState([]); // State to store disabled dates
+
   const [formData, setFormData] = useState({
     date: "",
     time: "",
     selectedDoctor: "",
     selectedLocation: "",
   });
+
   const ErrorToastOptions = {
     position: "bottom-center",
     autoClose: 3000,
@@ -28,6 +33,7 @@ const DoctorAppointment = () => {
     draggable: true,
     theme: "dark",
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -62,33 +68,66 @@ const DoctorAppointment = () => {
       toast.error("Unexpected Error", ErrorToastOptions);
     }
   };
+
   const handleClose = () => {
     setShowModal(false);
-
-    // Redirect to a new page after 2 seconds (adjust the timeout duration as needed)
-    // setTimeout(() => {
     navigate("/doctor/dashboard/doctor-service-selection");
     localStorage.removeItem("selectedService");
-    // }, 200);
+  };
+
+  const fetchAvailableAppointmentDates = async (selectedDoctor) => {
+    try {
+      // Assuming fetchAvailableAppointments is your API call function
+      const response = await fetchAvailableAppointments(selectedDoctor);
+      const availableDates = response.map((appointment) =>
+        moment(appointment.date).format("YYYY-MM-DD")
+      );
+      setDisabledDates(availableDates);
+    } catch (error) {
+      console.error("Error fetching available appointment dates:", error);
+    }
   };
 
   useEffect(() => {
-    // Check if selectedService is empty in localStorage
     const storedSelectedService = localStorage.getItem("selectedService");
     const clientId = localStorage.getItem("client_id");
     if (storedSelectedService && clientId) {
       setSelectedService(storedSelectedService);
     } else {
-      // If empty, navigate to the desired page
       navigate("/doctor/dashboard/doctor-service-selection");
     }
-  }, [navigate]);
+  }, [navigate, dispatch]);
+
+  useEffect(() => {
+    if (formData.selectedDoctor) {
+      fetchAvailableAppointmentDates(formData.selectedDoctor);
+    }
+  }, [formData.selectedDoctor]);
 
   return (
     <DoctorMenu>
       <div className="d-flex Doctor-Consul justify-between ">
         <section className="appo-cont">
           <Form onSubmit={handleSubmit} className="appo-cont-form">
+            <Form.Group controlId="formDoctor" className="mb-3">
+              <Form.Label>Select Trainer/Doctor</Form.Label>
+              <Form.Control
+                as="select"
+                name="selectedDoctor"
+                value={formData.selectedDoctor}
+                onChange={handleChange}
+              >
+                <option value="">Select a Trainer/Doctor</option>
+                {doctors &&
+                  doctors.length > 0 &&
+                  doctors.map((doctor) => (
+                    <option key={doctor.temp_code} value={doctor.temp_code}>
+                      {doctor.fullname}
+                    </option>
+                  ))}
+              </Form.Control>
+            </Form.Group>
+
             <Form.Group controlId="formDate" className="mb-3">
               <Form.Label>Appointment Date</Form.Label>
               <Form.Control
@@ -96,6 +135,9 @@ const DoctorAppointment = () => {
                 name="date"
                 value={formData.date}
                 onChange={handleChange}
+                min={moment().format("YYYY-MM-DD")}
+                max={moment().add(1, "year").format("YYYY-MM-DD")}
+                disabledDates={disabledDates.join(",")} // Join array to string
               />
             </Form.Group>
 
@@ -109,20 +151,6 @@ const DoctorAppointment = () => {
               />
             </Form.Group>
 
-            <Form.Group controlId="formDoctor" className="mb-3">
-              <Form.Label>Select Trainer/Doctor</Form.Label>
-              <Form.Control
-                as="select"
-                name="selectedDoctor"
-                value={formData.selectedDoctor}
-                onChange={handleChange}
-              >
-                <option value="">Select a Trainer/Doctor</option>
-                <option value="Dr. LaPlaca">Dr. LaPlaca</option>{" "}
-                <option value="Dr. LaPlaca">Dr. LaPlaca</option>
-                {/* Add more options as needed */}
-              </Form.Control>
-            </Form.Group>
             {selectedService && selectedService !== "Consultation" && (
               <Form.Group controlId="formLocation" className="mb-3">
                 <Form.Label>Select Location</Form.Label>

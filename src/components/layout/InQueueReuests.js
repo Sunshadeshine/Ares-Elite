@@ -1,7 +1,89 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Dropdown, Table } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+// import { Group } from "./Group";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { Link } from "react-router-dom";
+import { GetInQueueRequests } from "../../features/apiCall";
+import Loader from "./Components/Loader";
 
 const InQueueReuests = () => {
+  const inqueue = useSelector((state) => state.fetch_app.inqueue);
+  const totalPages = useSelector((state) => state.fetch_app.totalPages);
+  const isFetching = useSelector((state) => state.fetch_app.isFetching);
+  const [showDateInput, setShowDateInput] = useState(null);
+  const [selectedServiceTypes, setSelectedServiceTypes] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+  const pageSize = isDesktop ? 8 : 9;
+  const dispatch = useDispatch();
+  const fetchData = async () => {
+    try {
+      // Create an object to hold the parameters
+      const params = {
+        currentPage,
+        pageSize,
+      };
+
+      if (selectedServiceTypes.length > 0) {
+        params.selectedServiceTypes = selectedServiceTypes.toString();
+      }
+
+      if (selectedDate) {
+        // Format the date to 'yyyy-MM-dd'
+        const formattedDate = new Date(selectedDate).toLocaleDateString(
+          "en-CA"
+        );
+
+        params.selectedDate = formattedDate;
+      }
+
+      await GetInQueueRequests(dispatch, params);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(); // Fetch data whenever currentPage changes
+  }, [currentPage, selectedDate, selectedServiceTypes]);
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+  const Service_ENUM_values = {
+    SportsVision: "Sports Vision Evaluation",
+
+    ConcussionEval: "Concussion Evaluation",
+  };
+
+  const handleServiceTypeFilter = (selectedServiceType) => {
+    setSelectedServiceTypes((prevSelectedServiceTypes) => {
+      const updatedServiceTypes = prevSelectedServiceTypes.includes(
+        selectedServiceType
+      )
+        ? prevSelectedServiceTypes.filter(
+            (type) => type !== selectedServiceType
+          )
+        : [...prevSelectedServiceTypes, selectedServiceType];
+
+      console.log(updatedServiceTypes);
+
+      // Update state before calling fetchData
+      setSelectedServiceTypes(updatedServiceTypes);
+
+      // fetchData(); // Call fetchData after state has been updated
+
+      return updatedServiceTypes;
+    });
+  };
+
+  const handleDateFilter = (date) => {
+    setSelectedDate(date);
+  };
   const bookingsData = [
     {
       time: "9:23 AM",
@@ -66,8 +148,6 @@ const InQueueReuests = () => {
       phoneNumber: "(406) 555-0120",
       status: "PAID",
     },
-
-    // Add more data objects for each booking...
   ];
   return (
     <>
@@ -119,63 +199,127 @@ const InQueueReuests = () => {
           <div className="table-div">
             {" "}
             <Table className="table" striped variant="light">
-              <thead>
+              <thead className="table-head">
                 <tr>
                   <th style={{ paddingLeft: "20px" }}>
-                    Name <i className="fa-solid fa-sort" />
+                    <div>Name</div>
+                  </th>
+                  <th>
+                    <Dropdown>
+                      <Dropdown.Toggle variant="light" id="dropdown-basic">
+                        Select Service Types{" "}
+                        <i className="fa-solid fa-filter" />
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        {Object.keys(Service_ENUM_values).map((key) => (
+                          <Dropdown.Item key={key}>
+                            <input
+                              type="checkbox"
+                              id={key}
+                              checked={selectedServiceTypes.includes(key)}
+                              onChange={() => handleServiceTypeFilter(key)}
+                            />
+                            <label htmlFor={key}>
+                              {Service_ENUM_values[key]}
+                            </label>
+                          </Dropdown.Item>
+                        ))}
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </th>{" "}
+                  <th>Mobile Number</th>
                   <th>
-                    Service Type <i className="fa-solid fa-filter" />
+                    <div className="date-container">
+                      <div
+                        className="date-display "
+                        onClick={() => setShowDateInput(!showDateInput)}
+                      >
+                        {selectedDate === null
+                          ? "Date"
+                          : new Date(selectedDate).toLocaleDateString("en-CA")}
+                        <i className="fa-solid fa-sort" />
+                      </div>
+                      {showDateInput && (
+                        <DatePicker
+                          selected={selectedDate}
+                          onChange={(date) => {
+                            handleDateFilter(date);
+                            setShowDateInput(false);
+                          }}
+                        />
+                      )}
+                    </div>
                   </th>
-                  <th>
-                    Mobile Number <i className="fa-solid fa-sort" />
-                  </th>
-                  <th>
-                    Date <i className="fa-solid fa-sort" />
-                  </th>
-                  <th>
-                    Time <i className="fa-solid fa-sort" />
-                  </th>
+                  <th>Time</th>
                   <th>
                     Action <i className="fa-solid fa-filter" />
                   </th>
                 </tr>
               </thead>
-              <tbody className="recent-bookings-cont">
-                {bookingsData.map((booking, index) => (
-                  <tr key={index}>
-                    <td
-                      className=" name-email-image-cont"
-                      style={{ paddingLeft: "20px" }}
-                    >
-                      <img
-                        src="/images/image3.png"
-                        alt={booking.name}
-                        className="recent-booking-person-image "
-                        style={{ marginRight: "10px" }}
-                      />
-                      <div>
-                        <small className="name">{booking.name} </small>
-                        <br />
-                        <small className="email">{booking.email}</small>
-                      </div>
-                    </td>
-                    <td className="service_type">{booking.serviceType}</td>
-                    <td className="phoneno">{booking.phoneNumber}</td>
-                    <td className="date">{booking.date}</td>
-                    <td className="time">{booking.time}</td>
+              {!isFetching ? (
+                <>
+                  <tbody className="recent-bookings-cont">
+                    {bookingsData && bookingsData.length > 0 ? (
+                      <>
+                        {" "}
+                        {bookingsData &&
+                          bookingsData.map((booking, index) => (
+                            //       {inqueue && inqueue.length > 0 ? (
+                            // <>
+                            //   {" "}
+                            //   {inqueue &&
+                            //     inqueue.map((booking, index) => (
+                            <tr key={index}>
+                              <td
+                                className=" name-email-image-cont"
+                                style={{ paddingLeft: "20px" }}
+                              >
+                                <img
+                                  src="/images/image3.png"
+                                  alt={booking.name}
+                                  className="recent-booking-person-image "
+                                  style={{ marginRight: "10px" }}
+                                />
+                                <div>
+                                  <small className="name">
+                                    {booking.name}{" "}
+                                  </small>
+                                  <br />
+                                  <small className="email">
+                                    {booking.email}
+                                  </small>
+                                </div>
+                              </td>
+                              <td className="service_type">
+                                {booking.serviceType}
+                              </td>
+                              <td className="phoneno">{booking.phoneNumber}</td>
+                              <td className="date">{booking.date}</td>
+                              <td className="time">{booking.time}</td>
 
-                    <td className="status ">
-                      <div
-                        className="StartEvaluation "
-                        style={{ width: "fit-content" }}
-                      >
-                        Start Evaluation
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+                              <td className="status ">
+                                <div
+                                  className="StartEvaluation "
+                                  style={{ width: "fit-content" }}
+                                >
+                                  <Link to="/doctor/dashboard/start-evaluation">
+                                    Start Evaluation
+                                  </Link>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                      </>
+                    ) : (
+                      <>No appointments</>
+                    )}
+                  </tbody>
+                </>
+              ) : (
+                <>
+                  <Loader />
+                </>
+              )}
             </Table>
           </div>
         </div>

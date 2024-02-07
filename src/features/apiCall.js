@@ -9,7 +9,14 @@ import {
   Start,
   Success,
 } from "./authSlice.js";
-import { FetchFailure, FetchStart, FetchSuccess } from "./fetchSlice.js";
+import {
+  FetchAppointmentFailure,
+  FetchAppointmentStart,
+  FetchAppointmentSuccess,
+  FetchFailure,
+  FetchStart,
+  FetchSuccess,
+} from "./fetchSlice.js";
 import { FormFailure, FormStart, FormSuccess } from "./FormSlice.js";
 
 const ErrorToastOptions = {
@@ -126,19 +133,19 @@ export const GetProfileDetails = async (dispatch) => {
 };
 export const GetTodayAppointmentDetails = async (dispatch, todayDate) => {
   const token = localStorage.getItem("userToken");
-  dispatch(FetchStart());
+  dispatch(FetchAppointmentStart());
   try {
-    const { data } = await axios.get("/api/doctor/appointments", {
-      params: { date: todayDate },
+    const { data } = await axios.get(`/api/doctor/appointments/${todayDate}`, {
+      // params: { date: todayDate },
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log(data);
-    dispatch(FetchSuccess(data));
+    dispatch(FetchAppointmentSuccess(data));
     return data;
   } catch (error) {
     const errorMessage = parseError(error);
     toast.error(errorMessage, ErrorToastOptions);
-    dispatch(FetchFailure(errorMessage));
+    dispatch(FetchAppointmentFailure(errorMessage));
     return false; // Return false to indicate that the request failed
   }
 };
@@ -183,6 +190,66 @@ export const GetRecentBookings = async (
         service_type: selectedServiceTypes,
         date: selectedDate,
       },
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log(data);
+    dispatch(FetchSuccess(data));
+    return data;
+  } catch (error) {
+    const errorMessage = parseError(error);
+    toast.error(errorMessage, ErrorToastOptions);
+    dispatch(FetchFailure(errorMessage));
+    return false; // Return false to indicate that the request failed
+  }
+};
+export const GetInQueueRequests = async (
+  dispatch,
+  { currentPage, pageSize, selectedServiceTypes, selectedDate }
+) => {
+  dispatch(FetchStart());
+  const token = localStorage.getItem("userToken");
+  try {
+    const { data } = await axios.get("/api/doctor/in-queue-requests", {
+      params: {
+        page_no: currentPage,
+        per_page_count: pageSize,
+        service_type: selectedServiceTypes,
+        date: selectedDate,
+      },
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log(data);
+    dispatch(FetchSuccess(data));
+    return data;
+  } catch (error) {
+    const errorMessage = parseError(error);
+    toast.error(errorMessage, ErrorToastOptions);
+    dispatch(FetchFailure(errorMessage));
+    return false; // Return false to indicate that the request failed
+  }
+};
+export const getAllDoctors = async (dispatch) => {
+  dispatch(FetchStart());
+  const token = localStorage.getItem("userToken");
+  try {
+    const { data } = await axios.get("/api/doctor/get-all-doctors", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log(data);
+    dispatch(FetchSuccess(data));
+    return data;
+  } catch (error) {
+    const errorMessage = parseError(error);
+    toast.error(errorMessage, ErrorToastOptions);
+    dispatch(FetchFailure(errorMessage));
+    return false; // Return false to indicate that the request failed
+  }
+};
+export const fetchAvailableAppointments = async (dispatch) => {
+  dispatch(FetchStart());
+  const token = localStorage.getItem("userToken");
+  try {
+    const { data } = await axios.get("/api/doctor/get-slots", {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log(data);
