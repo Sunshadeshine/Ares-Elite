@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dropdown, Table } from "react-bootstrap";
+import { Dropdown, Pagination, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import DoctorMenu from "../components/layout/DoctorMenu";
 import { GetRecentBookings } from "../features/apiCall";
@@ -11,7 +11,8 @@ import Loader from "../components/layout/Components/Loader";
 
 const RecentBookings = () => {
   const bookings = useSelector((state) => state.fetch_app.bookings);
-  const totalPages = useSelector((state) => state.fetch_app.totalPages);
+  // const totalPages = useSelector((state) => state.fetch_app.totalPages);
+  const totalPages = 10;
   const isFetching = useSelector((state) => state.fetch_app.isFetching);
   const [showDateInput, setShowDateInput] = useState(null);
   const [selectedServiceTypes, setSelectedServiceTypes] = useState([]);
@@ -19,8 +20,9 @@ const RecentBookings = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const isDesktop = window.matchMedia("(min-width: 768px)").matches;
-  const pageSize = isDesktop ? 8 : 9;
+  const pageSize = isDesktop ? 7 : 9;
   const dispatch = useDispatch();
+  console.log(bookings);
   const fetchData = async () => {
     try {
       // Create an object to hold the parameters
@@ -105,6 +107,66 @@ const RecentBookings = () => {
   const handleDateFilter = (date) => {
     setSelectedDate(date);
   };
+
+  const renderPaginationItems = () => {
+    const items = [];
+    const range = 1; // Number of pages to show before and after current page
+
+    // Previous Page
+    items.push(
+      // <Pagination.Prev
+      //   key="prev"
+      //   onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
+      //   disabled={currentPage === 1}
+      // />
+      <li class="page-item">
+        <button
+          class="page-link"
+          href="#"
+          disabled={currentPage === 1}
+          onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
+        >
+          Previous
+        </button>
+      </li>
+    );
+
+    // Pagination Items
+    for (
+      let i = Math.max(1, currentPage - range);
+      i <= Math.min(totalPages, currentPage + range);
+      i++
+    ) {
+      items.push(
+        <Pagination.Item
+          key={i}
+          active={i === currentPage}
+          onClick={() => handlePageChange(i)}
+        >
+          {i}
+        </Pagination.Item>
+      );
+    }
+
+    // Next Page
+    items.push(
+      <li class="page-item">
+        <button
+          class="page-link"
+          href="#"
+          onClick={() =>
+            handlePageChange(Math.min(currentPage + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </li>
+    );
+
+    return items;
+  };
+
   return (
     <DoctorMenu>
       <div className="p-3 main-wrapper mt-5 booking-presc">
@@ -115,7 +177,7 @@ const RecentBookings = () => {
             </div>
             <div
               className="input-group mb-3 search-bar"
-              style={{ width: "400px" }}
+              style={{ width: "40%" }}
             >
               <input
                 type="text"
@@ -123,6 +185,7 @@ const RecentBookings = () => {
                 placeholder="Search..."
                 aria-label="Search"
                 aria-describedby="searchIcon"
+                style={{ height: "40px" }}
               />
               <div className="input-group-append ">
                 <span className="input-group-text" id="searchIcon">
@@ -132,8 +195,13 @@ const RecentBookings = () => {
             </div>
 
             <div
-              className=" d-flex flex-row  justify-content-center mt-3"
-              style={{ width: "150px", gap: "10px", marginRight: "15px" }}
+              className=" d-flex flex-row  justify-content-center "
+              style={{
+                width: "150px",
+                gap: "10px",
+                marginRight: "15px",
+                marginBottom: "18px",
+              }}
             >
               <i class="fa-solid fa-calendar m-auto" />
               <Dropdown>
@@ -158,9 +226,9 @@ const RecentBookings = () => {
           <div className="table-div-booking">
             <Table
               className="table"
-              striped
+              // striped
               hover
-              variant="light"
+              // variant="dark"
               // style={{ height: "70vh" }}
             >
               <thead className="table-head">
@@ -171,8 +239,8 @@ const RecentBookings = () => {
                   <th>
                     <Dropdown>
                       <Dropdown.Toggle variant="light" id="dropdown-basic">
-                        Select Service Types{" "}
-                        <i className="fa-solid fa-filter" />
+                        SELECT SERVICE TYPES
+                        <i className="fa-solid fa-filter m-1" />
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
                         {Object.keys(Service_ENUM_values).map((key) => (
@@ -200,7 +268,7 @@ const RecentBookings = () => {
                         {selectedDate === null
                           ? "Date"
                           : new Date(selectedDate).toLocaleDateString("en-CA")}
-                        <i className="fa-solid fa-sort" />
+                        <i className="fa-solid fa-sort m-1" />
                       </div>
                       {showDateInput && (
                         <DatePicker
@@ -222,8 +290,8 @@ const RecentBookings = () => {
                       <Dropdown.Toggle variant="light" id="status-dropdown">
                         {selectedStatus
                           ? Status_ENUM_values[selectedStatus]
-                          : "Select Status"}
-                        <i className="fa-solid fa-filter" />
+                          : "SELECT STATUS"}
+                        <i className="fa-solid fa-filter m-1" />
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
                         {Object.keys(Status_ENUM_values).map((status) => (
@@ -274,11 +342,12 @@ const RecentBookings = () => {
                             <td className="date">{booking?.app_date}</td>
                             <td className="time">{booking?.app_time}</td>
                             <td className="phoneno">
-                              {booking?.client?.phone_number}
+                              {/* {booking?.client?.phone_number} */}
+                              98107213755
                             </td>
                             <td className="status">
-                              <div className={`${booking?.status} `}>
-                                {booking.status}
+                              <div className={`${booking?.status} m-auto`}>
+                                <p> {booking.status}</p>
                               </div>
                             </td>
                             <td>...</td>
@@ -301,97 +370,14 @@ const RecentBookings = () => {
                 </>
               ) : (
                 <>
-                  {/* <tbody>
-                    <tr>
-                      {" "}
-                      <td>
-                        {" "}
-                        <Placeholder size="lg" />
-                      </td>{" "}
-                      <td>
-                        {" "}
-                        <Placeholder size="lg" />
-                      </td>{" "}
-                      <td>
-                        {" "}
-                        <Placeholder size="lg" />
-                      </td>{" "}
-                      <td>
-                        {" "}
-                        <Placeholder size="lg" />
-                      </td>{" "}
-                      <td>
-                        {" "}
-                        <Placeholder size="lg" />
-                      </td>{" "}
-                      <td>
-                        {" "}
-                        <Placeholder size="lg" />
-                      </td>
-                    </tr>{" "}
-                    <tr><td></td><td></td></tr>
-                    <tr>
-                      {" "}
-                      <td>
-                        {" "}
-                        <Placeholder size="lg" />
-                      </td>{" "}
-                      <td>
-                        {" "}
-                        <Placeholder size="lg" />
-                      </td>{" "}
-                      <td>
-                        {" "}
-                        <Placeholder size="lg" />
-                      </td>{" "}
-                      <td>
-                        {" "}
-                        <Placeholder size="lg" />
-                      </td>{" "}
-                      <td>
-                        {" "}
-                        <Placeholder size="lg" />
-                      </td>{" "}
-                      <td>
-                        {" "}
-                        <Placeholder size="lg" />
-                      </td>
-                    </tr>{" "}
-                    <tr>
-                      {" "}
-                      <td>
-                        {" "}
-                        <Placeholder size="lg" />
-                      </td>{" "}
-                      <td>
-                        {" "}
-                        <Placeholder size="lg" />
-                      </td>{" "}
-                      <td>
-                        {" "}
-                        <Placeholder size="lg" />
-                      </td>{" "}
-                      <td>
-                        {" "}
-                        <Placeholder size="lg" />
-                      </td>{" "}
-                      <td>
-                        {" "}
-                        <Placeholder size="lg" />
-                      </td>{" "}
-                      <td>
-                        {" "}
-                        <Placeholder size="lg" />
-                      </td>
-                    </tr>{" "}
-                    <tr></tr>
-                  </tbody> */}
-                  {/* <Spinner className="m-auto" /> */}
                   <Loader />
                 </>
               )}
             </Table>
           </div>
+        </div>
+        <div className="pag-cont">
+          <Pagination className="m-auto ">{renderPaginationItems()}</Pagination>
         </div>
       </div>
     </DoctorMenu>

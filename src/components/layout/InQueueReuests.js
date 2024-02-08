@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dropdown, Table } from "react-bootstrap";
+import { Dropdown, Pagination, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 // import { Group } from "./Group";
 import DatePicker from "react-datepicker";
@@ -10,7 +10,8 @@ import Loader from "./Components/Loader";
 
 const InQueueReuests = () => {
   const inqueue = useSelector((state) => state.fetch_app.inqueue);
-  const totalPages = useSelector((state) => state.fetch_app.totalPages);
+  // const totalPages = useSelector((state) => state.fetch_app.totalPages);
+  const totalPages = 10;
   const isFetching = useSelector((state) => state.fetch_app.isFetching);
   const [showDateInput, setShowDateInput] = useState(null);
   const [selectedServiceTypes, setSelectedServiceTypes] = useState([]);
@@ -149,6 +150,63 @@ const InQueueReuests = () => {
       status: "PAID",
     },
   ];
+  const renderPaginationItems = () => {
+    const items = [];
+    const range = 1; // Number of pages to show before and after current page
+
+    // Previous Page
+    items.push(
+      // <Pagination.Prev
+      //   key="prev"
+      //   onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
+      //   disabled={currentPage === 1}
+      // />
+      <li class="page-item">
+        <button
+          class="page-link"
+          href="#"
+          disabled={currentPage === 1}
+          onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
+        >
+          Previous
+        </button>
+      </li>
+    );
+
+    for (
+      let i = Math.max(1, currentPage - range);
+      i <= Math.min(totalPages, currentPage + range);
+      i++
+    ) {
+      items.push(
+        <Pagination.Item
+          key={i}
+          active={i === currentPage}
+          onClick={() => handlePageChange(i)}
+        >
+          {i}
+        </Pagination.Item>
+      );
+    }
+
+    // Next Page
+    items.push(
+      <li class="page-item">
+        <button
+          class="page-link"
+          href="#"
+          onClick={() =>
+            handlePageChange(Math.min(currentPage + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </li>
+    );
+
+    return items;
+  };
   return (
     <>
       <div className="mt-4  main-wrapper">
@@ -161,7 +219,7 @@ const InQueueReuests = () => {
             </div>
             <div
               className="input-group mb-3 search-bar"
-              style={{ width: "400px" }}
+              style={{ width: "40%" }}
             >
               <input
                 type="text"
@@ -169,6 +227,7 @@ const InQueueReuests = () => {
                 placeholder="Search..."
                 aria-label="Search"
                 aria-describedby="searchIcon"
+                style={{ height: "40px" }}
               />
               <div className="input-group-append">
                 <span className="input-group-text" id="searchIcon">
@@ -178,7 +237,12 @@ const InQueueReuests = () => {
             </div>
             <div
               className=" d-flex flex-row "
-              style={{ width: "150px", gap: "10px", marginRight: "15px" }}
+              style={{
+                width: "150px",
+                gap: "10px",
+                marginRight: "15px",
+                marginBottom: "18px",
+              }}
             >
               <i class="fa-solid fa-calendar m-auto"></i>
               <Dropdown>
@@ -207,7 +271,7 @@ const InQueueReuests = () => {
                   <th>
                     <Dropdown>
                       <Dropdown.Toggle variant="light" id="dropdown-basic">
-                        Select Service Types{" "}
+                        SELECT SERVICE TYPES
                         <i className="fa-solid fa-filter" />
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
@@ -299,7 +363,7 @@ const InQueueReuests = () => {
 
                               <td className="status ">
                                 <div
-                                  className="StartEvaluation "
+                                  className="StartEvaluation m-auto"
                                   style={{ width: "fit-content" }}
                                 >
                                   <Link to="/doctor/dashboard/start-evaluation">
@@ -322,6 +386,9 @@ const InQueueReuests = () => {
               )}
             </Table>
           </div>
+        </div>
+        <div className="pag-cont">
+          <Pagination className="m-auto ">{renderPaginationItems()}</Pagination>
         </div>
       </div>
     </>

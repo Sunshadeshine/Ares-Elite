@@ -120,12 +120,12 @@ const DoctorMenu = ({ children }) => {
                     width={130}
                     className="menu-logo"
                   />
-                  <img
+                  {/* <img
                     src="/images/Logo.png"
                     alt="logo"
                     width={60}
                     className="menu-logo-collapse"
-                  />
+                  /> */}
                 </div>
                 <ul className="list-unstyled text-start ">
                   {navigationMenu.map((item, index) => (

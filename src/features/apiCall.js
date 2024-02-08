@@ -9,14 +9,7 @@ import {
   Start,
   Success,
 } from "./authSlice.js";
-import {
-  FetchAppointmentFailure,
-  FetchAppointmentStart,
-  FetchAppointmentSuccess,
-  FetchFailure,
-  FetchStart,
-  FetchSuccess,
-} from "./fetchSlice.js";
+import { FetchFailure, FetchStart, FetchSuccess } from "./fetchSlice.js";
 import { FormFailure, FormStart, FormSuccess } from "./FormSlice.js";
 
 const ErrorToastOptions = {
@@ -133,19 +126,20 @@ export const GetProfileDetails = async (dispatch) => {
 };
 export const GetTodayAppointmentDetails = async (dispatch, todayDate) => {
   const token = localStorage.getItem("userToken");
-  dispatch(FetchAppointmentStart());
+  dispatch(FetchStart());
   try {
     const { data } = await axios.get(`/api/doctor/appointments/${todayDate}`, {
       // params: { date: todayDate },
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(data);
-    dispatch(FetchAppointmentSuccess(data));
+    dispatch(
+      FetchSuccess({ type: "FETCH_APPOINTMENTS_SUCCESS", payload: data })
+    );
     return data;
   } catch (error) {
     const errorMessage = parseError(error);
     toast.error(errorMessage, ErrorToastOptions);
-    dispatch(FetchAppointmentFailure(errorMessage));
+    dispatch(FetchFailure(errorMessage));
     return false; // Return false to indicate that the request failed
   }
 };
@@ -166,7 +160,9 @@ export const GetRecentPrescriptions = async (
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log(data);
-    dispatch(FetchSuccess(data));
+    dispatch(
+      FetchSuccess({ type: "FETCH_PRESCRIPTIONS_SUCCESS", payload: data })
+    );
     return data;
   } catch (error) {
     const errorMessage = parseError(error);
@@ -193,7 +189,7 @@ export const GetRecentBookings = async (
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log(data);
-    dispatch(FetchSuccess(data));
+    dispatch(FetchSuccess({ type: "FETCH_BOOKINGS_SUCCESS", payload: data }));
     return data;
   } catch (error) {
     const errorMessage = parseError(error);
@@ -219,7 +215,7 @@ export const GetInQueueRequests = async (
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log(data);
-    dispatch(FetchSuccess(data));
+    dispatch(FetchSuccess({ type: "FETCH_INQUEUE_SUCCESS", payload: data }));
     return data;
   } catch (error) {
     const errorMessage = parseError(error);
@@ -236,7 +232,7 @@ export const getAllDoctors = async (dispatch) => {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log(data);
-    dispatch(FetchSuccess(data));
+    dispatch(FetchSuccess({ type: "FETCH_DOCTORS_SUCCESS", payload: data }));
     return data;
   } catch (error) {
     const errorMessage = parseError(error);
@@ -245,15 +241,26 @@ export const getAllDoctors = async (dispatch) => {
     return false; // Return false to indicate that the request failed
   }
 };
-export const fetchAvailableAppointments = async (dispatch) => {
+export const fetchAvailableAppointments = async (
+  dispatch,
+  { selectedDoctor }
+) => {
+  console.log(selectedDoctor);
   dispatch(FetchStart());
   const token = localStorage.getItem("userToken");
   try {
-    const { data } = await axios.get("/api/doctor/get-slots", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const { data } = await axios.post(
+      "/api/doctor/get-slots",
+      JSON.stringify({ doctor: selectedDoctor }), // Stringify the object
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json", // Add content type header
+        },
+      }
+    );
     console.log(data);
-    dispatch(FetchSuccess(data));
+    dispatch(FetchSuccess({ type: "FETCH_SLOTS_SUCCESS", payload: data }));
     return data;
   } catch (error) {
     const errorMessage = parseError(error);
