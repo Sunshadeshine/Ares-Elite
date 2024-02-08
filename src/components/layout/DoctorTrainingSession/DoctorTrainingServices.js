@@ -35,9 +35,8 @@ const DoctorTrainingServices = () => {
     <HomeLayout>
       {showDoctorInOffice ? (
         <>
-          {showDoctorInOffice === "InOffice" ? (
+          {selectedTrainingType == "InOffice" ? (
             <>
-              {" "}
               <DoctorInOffice navigate={navigate} />
             </>
           ) : (
@@ -61,7 +60,7 @@ const DoctorTrainingServices = () => {
               style={{ gap: "24px" }}
               onSubmit={handleSubmit}
             >
-              <Form.Check
+              {/* <Form.Check
                 type="radio"
                 id="inOfficeUser"
                 label="In Office"
@@ -82,7 +81,40 @@ const DoctorTrainingServices = () => {
                 className={`doctor-user ${
                   selectedTrainingType === "TeleSessions" ? "checked" : ""
                 }`}
-              />{" "}
+              />{" "} */}
+              <div className="radio-container">
+                <label
+                  htmlFor="inOfficeUser"
+                  className={`radio-label ${
+                    selectedTrainingType === "InOffice" ? "checked" : ""
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    id="inOfficeUser"
+                    value="InOffice"
+                    checked={selectedTrainingType === "InOffice"}
+                    onChange={handleTrainingTypeChange}
+                  />
+                  In Office
+                </label>
+
+                <label
+                  htmlFor="teleSessionsUser"
+                  className={`radio-label ${
+                    selectedTrainingType === "TeleSessions" ? "checked" : ""
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    id="teleSessionsUser"
+                    value="TeleSessions"
+                    checked={selectedTrainingType === "TeleSessions"}
+                    onChange={handleTrainingTypeChange}
+                  />
+                  Tele Sessions
+                </label>
+              </div>
               <Button
                 type="submit"
                 className="purple-button "

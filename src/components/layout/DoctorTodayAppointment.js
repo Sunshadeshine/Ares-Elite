@@ -205,7 +205,7 @@ const DoctorTodayAppointment = () => {
     0: {
       _id: "65c3347f8df00a4f1e5046ce",
       appointment_id: "72848272",
-      service_type: "ConcussionEval",
+      service_type: "Concussion Evaluation",
       app_date: "2024-02-07",
       app_time: "10:00 AM",
       client: {
@@ -225,7 +225,7 @@ const DoctorTodayAppointment = () => {
     1: {
       _id: "65c3349a8df00a4f1e5046db",
       appointment_id: "40716501",
-      service_type: "MedicalOfficeVisit",
+      service_type: "Medical Office Visit",
       app_date: "2024-02-07",
       app_time: "12:00 AM",
       client: {
@@ -245,7 +245,7 @@ const DoctorTodayAppointment = () => {
     2: {
       _id: "65c335108df00a4f1e5046e4",
       appointment_id: "90827138",
-      service_type: "PhysicalTherapy",
+      service_type: "Sports Vision Performance",
       app_date: "2024-02-08",
       app_time: "02:30 PM",
       client: {
@@ -256,7 +256,7 @@ const DoctorTodayAppointment = () => {
         suffix: "sd",
       },
       doctor_trainer: "Dr. Johnson",
-      location: "Rehabilitation Center",
+      location: "hi",
       status: "pending",
       createdAt: "2024-02-07T08:00:15.234Z",
       updatedAt: "2024-02-07T08:00:15.234Z",
@@ -285,7 +285,7 @@ const DoctorTodayAppointment = () => {
     4: {
       _id: "65c335648df00a4f1e5046f6",
       appointment_id: "31904872",
-      service_type: "DentalCleaning",
+      service_type: "Dental Cleaning",
       app_date: "2024-02-10",
       app_time: "11:30 AM",
       client: {
@@ -305,7 +305,8 @@ const DoctorTodayAppointment = () => {
     5: {
       _id: "65c3358a8df00a4f1e5046ff",
       appointment_id: "72938401",
-      service_type: "EyeExam",
+      service_type: "Sports Vision Performance",
+
       app_date: "2024-02-11",
       app_time: "03:45 PM",
       client: {
@@ -325,7 +326,7 @@ const DoctorTodayAppointment = () => {
     6: {
       _id: "65c335b08df00a4f1e504708",
       appointment_id: "14820574",
-      service_type: "AllergyTest",
+      service_type: "Concussion Evaluation",
       app_date: "2024-02-12",
       app_time: "10:15 AM",
       client: {
@@ -345,7 +346,7 @@ const DoctorTodayAppointment = () => {
     7: {
       _id: "65c335d68df00a4f1e504710",
       appointment_id: "61539248",
-      service_type: "NutritionConsultation",
+      service_type: "Concussion Evaluation",
       app_date: "2024-02-13",
       app_time: "01:00 PM",
       client: {
@@ -381,7 +382,7 @@ const DoctorTodayAppointment = () => {
               <td>Name</td>
               <td>
                 Service
-                <i className="fa-solid fa-filter" />
+                <i className="fa-solid fa-filter m-1" />
               </td>
               <td>Time</td>
             </tr>
@@ -392,7 +393,7 @@ const DoctorTodayAppointment = () => {
               Object.values(appointments).map((appointment) => (
                 <tr key={appointment.appointment_id}>
                   <td>
-                    <div className="d-flex align-items-center">
+                    <div className="d-flex ">
                       <Image
                         alt="profile picture"
                         src="/images/image3.png"
@@ -401,18 +402,21 @@ const DoctorTodayAppointment = () => {
                         height={42}
                         className="mr-2"
                       />
-                      <div>
-                        <div style={{ fontSize: "15px", color: "black" }}>
+                      <div className="text-left">
+                        <div>
                           {appointment.client.first_name}{" "}
                           {appointment.client.last_name}
                         </div>
-                        <div style={{ fontSize: "12px", color: "grey" }}>
-                          {appointment.client.email}
+                        <div style={{ color: "grey" }}>
+                          {/* {appointment.client.email} */}
+                          charupatel@gmail.com
                         </div>
                       </div>
                     </div>
                   </td>
-                  <td>{appointment.service_type}</td>
+                  <td className="m-auto">
+                    <p className="p-0 m-0">{appointment.service_type}</p>
+                  </td>
                   <td>{appointment.app_time}</td>
                 </tr>
               ))}

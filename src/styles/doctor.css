@@ -206,7 +206,40 @@ a:hover {
   height: 100vh;
   overflow-y: hidden;
 }
+.menu-logo {
+  width: 130px !important;
+}
 @media screen and (min-width: 1901px) {
+  .doctor-menu-cont {
+    /* width: 70px; */
+    width: 270px;
+    padding: 0px;
+    position: absolute;
+    height: 100vh;
+    display: inline;
+    /* transition: width 0.3s ease; */
+  }
+  .doctor-menu .menu-icon-cont img {
+    height: 100%;
+    width: 100%;
+  }
+  .doctor-menu .menu-icon-cont {
+    width: 33px;
+    height: 33px;
+    display: inline-block;
+  }
+  .menu-logo {
+    width: 180px !important;
+  }
+  .doctor-menu li {
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-bottom: 50px;
+    text-transform: capitalize;
+  }
   .select-user img,
   .doctor-service-container img {
     width: 130px;
@@ -281,6 +314,7 @@ a:hover {
     height: 300px;
   }
 }
+
 /* .doctor-user-type,
 .doctor-services,
 .doctor-user {
@@ -434,6 +468,14 @@ a:hover {
   background-color: transparent;
 }
 @media only screen and (max-width: 600px) {
+  .radio-label {
+    width: 300px !important;
+  }
+
+  .doctor-service-container h5,
+  .select-user h5 {
+    font-size: 1.25rem !important;
+  }
   .bt-2 {
     margin-right: 10px !important;
   }
@@ -485,6 +527,9 @@ a:hover {
     font-size: 13px;
     font-weight: 500;
     text-transform: capitalize;
+  }
+  .today-appoint-container tbody {
+    font-size: 12px !important;
   }
   .today-appoint-container > div:first-child {
     padding: 10px;

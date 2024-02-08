@@ -19,8 +19,18 @@ const RecentBookings = () => {
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+
   const isDesktop = window.matchMedia("(min-width: 768px)").matches;
-  const pageSize = isDesktop ? 7 : 9;
+  const isLargeDesktop = window.matchMedia("(min-width: 1900px)").matches;
+  let pageSize;
+
+  if (isLargeDesktop) {
+    pageSize = 11;
+  } else if (isDesktop) {
+    pageSize = 7;
+  } else {
+    pageSize = 9;
+  }
   const dispatch = useDispatch();
   console.log(bookings);
   const fetchData = async () => {

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import BootstrapModal from "../Components/BootstrapModal";
 
 const DoctorMonthlyPlans = ({ navigate, type }) => {
   const [showMonthlyPlans, setShowMonthlyPlans] = useState(false);
@@ -8,10 +10,17 @@ const DoctorMonthlyPlans = ({ navigate, type }) => {
   const [plans, setplans] = useState([]);
   const [selectedMonthlyPlans, setSelectedMonthlyPlans] = useState("");
   const dispatch = useDispatch();
+  const navigate2 = useNavigate();
 
+  const [showModal, setShowModal] = useState(false);
+  const handleClose = () => {
+    setShowModal(false);
+    navigate2("/doctor/dashboard");
+  };
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
-    alert(selectedMonthlyPlans);
+    // alert(selectedMonthlyPlans);
+    setShowModal(true);
   };
 
   const handleMonthlyPlansChange = (event) => {
@@ -25,8 +34,9 @@ const DoctorMonthlyPlans = ({ navigate, type }) => {
       // If empty, navigate to the desired page
       navigate("/doctor/dashboard/doctor-service-selection");
     }
-    if (plans === "Monthly") setplans(monthlyPlansOptions);
-    else if (plans === "Package") {
+    if (type === "Monthly") {
+      setplans(monthlyPlansOptions);
+    } else if (type == "Packages") {
       setplans(packagePlansOptions);
     } else {
       setplans(monthlyPlansOptions);
@@ -87,20 +97,40 @@ const DoctorMonthlyPlans = ({ navigate, type }) => {
           style={{ gap: "24px" }}
           onSubmit={handleSubmit}
         >
-          {plans.map((option) => (
-            <Form.Check
-              key={option.id}
-              type="radio"
-              id={option.id}
-              label={option.label}
-              value={option.value}
-              checked={selectedMonthlyPlans === option.value}
-              onChange={handleMonthlyPlansChange}
-              className={`doctor-user ${
-                selectedMonthlyPlans === option.value ? "checked" : ""
-              }`}
-            />
-          ))}
+          <div className="radio-container">
+            {plans.map((option) => (
+              <label
+                key={option.id}
+                htmlFor={option.id}
+                className={`radio-label ${
+                  selectedMonthlyPlans === option.value ? "checked" : ""
+                }`}
+              >
+                <input
+                  type="radio"
+                  id={option.id}
+                  value={option.value}
+                  checked={selectedMonthlyPlans === option.value}
+                  onChange={handleMonthlyPlansChange}
+                />
+                {option.label}
+              </label>
+            ))}
+          </div>
+          {/* {plans.map((option) => ( 
+    // <Form.Check
+            //   key={option.id}
+            //   type="radio"
+            //   id={option.id}
+            //   label={option.label}
+            //   value={option.value}
+            //   checked={selectedMonthlyPlans === option.value}
+            //   onChange={handleMonthlyPlansChange}
+            //   className={`doctor-user ${
+            //     selectedMonthlyPlans === option.value ? "checked" : ""
+            //   }`}
+            // />
+          {/* ))} */}
           <Button
             type="submit"
             className="purple-button "
@@ -110,9 +140,33 @@ const DoctorMonthlyPlans = ({ navigate, type }) => {
             Continue
           </Button>
         </Form>{" "}
+        <BootstrapModal
+          showModal={showModal}
+          handleClose={handleClose}
+          modalTitle={""}
+          modalContent={<ModalContent />}
+        />
       </section>
     </>
   );
 };
 
 export default DoctorMonthlyPlans;
+const ModalContent = () => {
+  return (
+    <section className="text-center">
+      <img
+        src="/images/icons/formTick.svg"
+        alt="payment-icon"
+        className="mb-4"
+      />
+      <div className="d-flex check-your-box-texts">
+        <h5>Training Frequency Selected!!</h5>
+        <p>
+          Training frequency has been selected to 4 Sessions/month.
+          <br /> Payment Confirmation has been sent to Client’s Email Id.
+        </p>
+      </div>
+    </section>
+  );
+};

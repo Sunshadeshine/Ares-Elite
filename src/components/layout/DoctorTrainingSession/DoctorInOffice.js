@@ -20,6 +20,7 @@ const DoctorInOffice = ({ navigate }) => {
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission
+    alert(selectedInOfficeType);
     setShowDoctorMonthly(true);
   };
 
@@ -45,28 +46,40 @@ const DoctorInOffice = ({ navigate }) => {
               style={{ gap: "24px" }}
               onSubmit={handleSubmit}
             >
-              <Form.Check
-                type="radio"
-                id="monthly"
-                label="Monthly"
-                value="Monthly"
-                checked={selectedInOfficeType === "Monthly"}
-                onChange={handleInOfficeTypeChange}
-                className={`doctor-user ${
-                  selectedInOfficeType === "Monthly" ? "checked" : ""
-                }`}
-              />
-              <Form.Check
-                type="radio"
-                id="Packages"
-                label="Packages"
-                value="Packages"
-                checked={selectedInOfficeType === "Packages"}
-                onChange={handleInOfficeTypeChange}
-                className={`doctor-user ${
-                  selectedInOfficeType === "Packages" ? "checked" : ""
-                }`}
-              />
+              <div className="radio-container">
+                <label
+                  htmlFor="monthly"
+                  className={`radio-label ${
+                    selectedInOfficeType === "Monthly" ? "checked" : ""
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    id="monthly"
+                    value="Monthly"
+                    checked={selectedInOfficeType === "Monthly"}
+                    onChange={handleInOfficeTypeChange}
+                  />
+                  Monthly
+                </label>
+
+                <label
+                  htmlFor="Packages"
+                  className={`radio-label ${
+                    selectedInOfficeType === "Packages" ? "checked" : ""
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    id="Packages"
+                    value="Packages"
+                    checked={selectedInOfficeType === "Packages"}
+                    onChange={handleInOfficeTypeChange}
+                  />
+                  Packages
+                </label>
+              </div>
+
               <Button
                 type="submit"
                 className="purple-button "
