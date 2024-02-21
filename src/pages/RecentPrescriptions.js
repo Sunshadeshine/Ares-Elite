@@ -116,7 +116,7 @@ const RecentPrescriptions = () => {
           <div className="recent-booking-head">
             <div style={{ paddingLeft: "15px" }}>
               <h2 className="text-gradient text-uppercase">
-                Recent Prescription
+                Prescription REQUESTS
               </h2>
             </div>
             <div

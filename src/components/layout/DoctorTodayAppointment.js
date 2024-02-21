@@ -184,12 +184,12 @@
 
 import moment from "moment";
 import React, { useState } from "react";
-import { Image, NavLink, Table } from "react-bootstrap";
+import { Image, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const DoctorTodayAppointment = () => {
   const [showModal, setShowModal] = useState(false);
-  const [visibleAppointments, setVisibleAppointments] = useState(10);
   const { isFetching } = useSelector((state) => state.fetch_app.isFetching);
   const dispatch = useDispatch();
   const todayDate = moment().format("YYYY-MM-DD");
@@ -378,16 +378,22 @@ const DoctorTodayAppointment = () => {
         <div className="d-flex justify-content-center w-100 mb-4 ">
           <div className="w-100 d-flex justify-content-between flex-row">
             <h5>Today's Appointments</h5>
-            <NavLink className="purple-text">View All</NavLink>
+            <Link
+              className="purple-text"
+              to="/doctor/dashboard/all-appointments"
+            >
+              <i class="fa fa-expand-alt mr-1" aria-hidden="true" /> Expand
+            </Link>
           </div>
-
-          <hr />
-          {appointments && appointments.length > visibleAppointments && (
-            <NavLink className="view-all">View All</NavLink>
-          )}
         </div>
         <Table borderless responsive>
-          <thead>
+          <thead
+            style={{
+              borderTop: "1px solid rgb(178, 170 ,170,0.2)",
+              borderBottom: "1px solid rgb(178 ,170 ,170,0.2)",
+              fontSize: "18px",
+            }}
+          >
             <tr>
               <td>Name</td>
               <td>

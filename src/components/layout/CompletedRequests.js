@@ -14,6 +14,7 @@ const CompletedRequests = () => {
       email: "curtis.weaver@example.com",
       phoneNumber: "(406) 555-0120",
       status: "failed",
+      bt: "plan",
     },
     {
       time: "9:23 AM",
@@ -23,6 +24,7 @@ const CompletedRequests = () => {
       email: "curtis.weaver@example.com",
       phoneNumber: "(406) 555-0120",
       status: "pending",
+      bt: "drill",
     },
     {
       time: "9:23 AM",
@@ -32,6 +34,7 @@ const CompletedRequests = () => {
       email: "curtis.weaver@example.com",
       phoneNumber: "(406) 555-0120",
       status: "paid",
+      bt: "drill",
     },
     {
       time: "9:23 AM",
@@ -41,6 +44,7 @@ const CompletedRequests = () => {
       email: "curtis.weaver@example.com",
       phoneNumber: "(406) 555-0120",
       status: "paid",
+      bt: "plan",
     },
     {
       time: "9:23 AM",
@@ -50,6 +54,7 @@ const CompletedRequests = () => {
       email: "curtis.weaver@example.com",
       phoneNumber: "(406) 555-0120",
       status: "pending",
+      bt: "plan",
     },
 
     // Add more data objects for each booking...
@@ -167,10 +172,18 @@ const CompletedRequests = () => {
                       <Row>
                         <Col>
                           <button className="action-select-plan ">
-                            <Link to="/doctor/dashboard/doctor-plans">
-                              {" "}
-                              Select Plan
-                            </Link>
+                            {booking?.bt == "plan" ? (
+                              <>
+                                <Link to="/doctor/dashboard/doctor-plans">
+                                  {" "}
+                                  Select Plan
+                                </Link>
+                              </>
+                            ) : (
+                              <>
+                                <Link to="/drill"> Start Drill </Link>
+                              </>
+                            )}
                           </button>
                         </Col>
                       </Row>

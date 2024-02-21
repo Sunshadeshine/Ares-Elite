@@ -367,6 +367,153 @@ tbody {
   background-color: white;
   width: 100%;
 }
-.recent-bookings-cont tr {
+.eval-cont .recent-bookings-cont tr {
   border-top: 1px solid rgb(223, 220, 220);
+}
+.acc-head-cont p {
+  margin-bottom: 0px;
+  font-size: 13px;
+}
+.acc-head-cont img {
+  height: 15px;
+  width: 15px;
+}
+.acc-head-cont div {
+  display: flex;
+  align-self: center;
+  margin-left: 20px;
+  gap: 5px;
+}
+.accordion-button::after {
+  position: absolute !important;
+}
+.accordion-body {
+  padding: 0px;
+  margin-bottom: 10px;
+}
+.accordion-button {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 13px 13px 13px 13px;
+  margin-bottom: 10px;
+  border-top: 1px solid rgb(232, 227, 227);
+}
+.accordion h6 {
+  margin-left: 30px;
+}
+.accordion-button:not(.collapsed) {
+  color: var(--bs-accordion-active-color);
+  border-radius: 10px !important;
+  background-color: #f1eeff;
+  box-shadow: inset 0 calc(-1 * var(--bs-accordion-border-width)) 0
+    var(--bs-accordion-border-color);
+}
+
+.checkbox-wrapper-43 input[type="checkbox"] {
+  display: none;
+  visibility: hidden;
+}
+
+.checkbox-wrapper-43 label {
+  display: inline-block;
+}
+
+.checkbox-wrapper-43 .check {
+  cursor: pointer;
+  position: relative;
+  margin: auto;
+  width: 18px;
+  height: 18px;
+  -webkit-tap-highlight-color: transparent;
+  transform: translate3d(0, 0, 0);
+}
+.checkbox-wrapper-43 .check:before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(34, 50, 84, 0.03);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.checkbox-wrapper-43 .check svg {
+  position: relative;
+  z-index: 1;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: #c8ccd4;
+  stroke-width: 1.5;
+  transform: translate3d(0, 0, 0);
+  transition: all 0.2s ease;
+  margin-right: 10px;
+}
+.checkbox-wrapper-43 .check svg path {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 0;
+}
+.checkbox-wrapper-43 .check svg polyline {
+  stroke-dasharray: 22;
+  stroke-dashoffset: 66;
+}
+.checkbox-wrapper-43 .check:hover:before {
+  opacity: 1;
+}
+.checkbox-wrapper-43 .check:hover svg {
+  stroke: #4285f4;
+}
+.checkbox-wrapper-43 input[type="checkbox"]:checked + .check svg {
+  stroke: #4285f4;
+}
+.checkbox-wrapper-43 input[type="checkbox"]:checked + .check svg path {
+  stroke-dashoffset: 60;
+  transition: all 0.3s linear;
+}
+.checkbox-wrapper-43 input[type="checkbox"]:checked + .check svg polyline {
+  stroke-dashoffset: 42;
+  transition: all 0.2s linear;
+  transition-delay: 0.15s;
+}
+.checkbox-wrapper-43 p {
+  font-family: Inter;
+  font-size: 14px;
+  color: var(--Gray-700, #4e5566);
+}
+.days-cont:hover {
+  background-color: #e9e8eb;
+  border-radius: 10px;
+}
+
+.days-cont {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px 10px 20px;
+}
+.accordion-item {
+  border: 0px;
+}
+.drill-form .container .col-sm-6 {
+  padding: 0px;
+}
+.drill-form .container {
+  margin-top: 20px;
+  padding: 0px;
+}
+.drill-form .form-control:focus {
+  background-color: WHITE;
+}
+.drill-form .row {
+  margin-bottom: 15px;
+}
+.drill-form .form-label {
+  font-weight: 500;
+  font-size: 18px;
+}
+.drill-form .form-control {
+  width: 100%;
+  background-color: #f4f4f4;
 }

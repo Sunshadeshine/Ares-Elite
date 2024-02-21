@@ -13,6 +13,9 @@ import DoctorPlansPackages from "./pages/DoctorPlansPackages";
 import DoctorProfile from "./pages/DoctorProfile";
 import DoctorServiceSelection from "./pages/DoctorServiceSelection";
 // import Step1 from "./pages/Forms/Client Information/Step1";
+import Athedrill from "./pages/Athedrill";
+import DoctorExpandAppointments from "./pages/DoctorExpandAppointments";
+import Drill from "./pages/Drill";
 import Client_Form from "./pages/Forms/Client_Form";
 import PageNotFound from "./pages/PageNotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -36,11 +39,17 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
 
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/drill" element={<Drill />} />
+          <Route path="/drill2" element={<Athedrill />} />
           <Route path="/update-password" element={<UpdatePassword />} />
           <Route path="*" element={<PageNotFound />} />
 
           <Route path="/doctor" element={<ProtectedRoute />}>
             <Route path="dashboard" element={<DoctorSelectUserType />} />
+            <Route
+              path="dashboard/all-appointments"
+              element={<DoctorExpandAppointments />}
+            />
             <Route path="dashboard/client_form" element={<Client_Form />} />
             <Route path="dashboard/profile" element={<DoctorProfile />} />
             <Route
