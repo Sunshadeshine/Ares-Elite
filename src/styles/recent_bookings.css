@@ -1,6 +1,7 @@
 .recent-booking-person-image {
   width: 40px;
   height: 40px;
+  border-radius: 50%;
 }
 button {
   border: 0px;
@@ -16,42 +17,61 @@ thead th {
 .service_type,
 .date,
 .phoneno {
-  color: #6174a5 !important;
+  color: black !important;
+  font-weight: 400;
+  font-size: 14px !important;
 }
 .time {
-  font-weight: 600;
+  font-weight: 800;
+  color: #6431f1 !important;
+  font-size: 14px;
 }
 .name {
   font-weight: 600;
 }
 .email {
-  font-weight: 400;
-  color: #a3afcf;
+  font-weight: 300;
+  color: #000001;
+  opacity: 0.3;
 }
-/* .frame {
-  width: 85vw !important;
-} */
 
+.main-wrapper table thead tr th {
+  font-weight: 800;
+}
 .recent-booking-head i {
   color: #6174a5;
   font-size: 25px;
 }
+.table i {
+  color: #000000;
+  font-size: 15px;
+}
 .recent-booking-head h2 {
   font-weight: 600;
   color: #6174a5 !important;
-  font-size: 22px;
+  font-size: 28px;
 }
 .recent-booking-head {
   background-color: white;
   padding: 20px 0px 5px 10px;
   border-radius: 20px 20px 0px 0px;
 }
-/* .main-wrapper {
-  margin: 20px;
-} */
-
 .action {
   text-align: center;
+  /* width: 150px; */
+  margin: 0;
+  /* margin: auto; */
+}
+.calender-icon {
+  padding: 5px 8px 2px 8px;
+}
+.calender-icon,
+#dropdown-pages {
+  /* padding: 8px; */
+  border-radius: 5px;
+  background-color: #f4f4f4;
+  color: #6174a5 !important;
+  border: 0px;
 }
 .paid,
 .pending,
@@ -60,11 +80,11 @@ thead th {
 .action-select-plan,
 .StartPrescription,
 .action-view-eval {
-  border-radius: 10px;
-  width: fit-content;
+  border-radius: 20px;
+  width: 120px;
   height: 30px;
-  text-transform: uppercase;
-  padding: 4px 10px;
+  text-transform: capitalize;
+  padding: 4px 30px;
   color: white;
   word-spacing: 1px;
   font-weight: 300;
@@ -75,28 +95,32 @@ tbody {
 }
 .action-view-eval {
   border-radius: 8.622px;
-  background: #5122ce;
-  width: 150px;
+  background: #ebe6ff;
+  color: #7257ff;
+  width: 120px;
   height: 34px !important;
   padding: 6px 5px;
   text-transform: capitalize;
+  margin-bottom: 7px;
 }
 .action-select-plan {
-  height: 34px !important;
-  padding: 6px 5px;
+  margin-bottom: 7px;
+  margin-top: 7px;
+
+  height: 32px !important;
+  padding: 3px 2px;
   text-transform: capitalize;
   border-radius: 8.622px;
-  background: #42cc7d;
-  width: 150px !important;
+  background: #7257ff;
+  color: white;
+  width: 120px !important;
 }
 .main-wrapper table tbody tr:hover + tr {
   background-color: rgb(28, 14, 68, 0.2) !important;
   color: white !important;
 }
 .main-wrapper table thead tr th {
-  text-transform: uppercase;
-  background: rgb(28, 14, 68, 0.9) !important;
-  color: rgb(255, 255, 255) !important;
+  color: rgb(0, 0, 0) !important;
   padding: 0 !important;
   padding: 10px !important;
 }
@@ -105,21 +129,31 @@ tbody {
 }
 .StartPrescription {
   height: 38px !important;
+  width: fit-content !important;
 }
-
+.complete {
+  color: #7257ff !important;
+}
+.service-status {
+  font-size: 14px;
+}
 /* { */
 .StartEvaluation,
 .StartPrescription {
+  border-radius: 10px;
   height: fit-content;
   padding: 6px 10px;
-  background-color: #42cc7d;
+  background-color: #7257ff;
+
   text-transform: capitalize !important;
 }
 .paid {
-  background: rgba(66, 204, 125, 0.75);
+  background: rgba(153, 245, 193, 0.4);
+  color: rgb(5, 157, 71);
 }
 .pending {
-  background: rgba(242, 167, 59, 0.75);
+  background: rgba(248, 206, 147, 0.4);
+  color: rgb(238, 143, 9);
 }
 .failed {
   background: rgba(234, 51, 75, 0.75);
@@ -133,7 +167,6 @@ tbody {
 .table-div .show > .btn-light.dropdown-toggle,
 .table-div .show > .btn-light.dropdown-toggle:focus {
   background-color: transparent;
-  color: white;
   border: 0px;
   border-radius: 0px;
   box-shadow: none;
@@ -152,16 +185,16 @@ tbody {
 .dropdown-toggle,
 .dropdown-toggle:hover {
   background-color: transparent;
-  color: #6174a5;
+  color: black;
   border: 1px solid #a3afcf;
   border-radius: 10px;
 }
 .frame {
-  width: 90%;
+  width: 98%;
   margin: auto;
   /* box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; */
   border-radius: 20px 20px 0px 0px;
-  height: 80vh;
+  height: 98vh;
 }
 /* niranjan laptpo */
 @media screen and (min-width: 1901px) {
@@ -190,25 +223,12 @@ tbody {
   font-size: 25px;
   font-weight: 700;
   position: relative;
-
-  /* background-color: white;
-  text-align: center;
-  margin: auto;  */
   top: 10px !important;
-
-  /* width: inherit; */
 }
 .main-wrapper {
   width: 100%;
-  /* height: 100vh; */
-  /* overflow-y: hidden;
-  overflow-x: hidden; */
 }
-/* .evaluation-buttons-cont {
-  width: 90%;
-  margin: auto;
 
-} */
 .name-email-image-cont {
   display: flex;
   text-align: start !important;
@@ -217,11 +237,20 @@ tbody {
   /* height: 13px !important; */
 }
 .recent-bookings-cont tr td {
-  background-color: #f2f8fc !important;
+  /* background-color: #f2f8fc !important; */
 }
 
+.recent-booking-head .search-bar input {
+  background-color: #f4f4f4;
+}
+
+.input-group-text {
+  border: 0px;
+  background-color: #f4f4f4;
+}
 .recent-booking-head .search-bar .form-control {
   width: fit-content !important;
+  border: 0px;
 }
 .pagination {
   width: fit-content;
@@ -311,4 +340,33 @@ tbody {
   th {
     width: 200px;
   }
+}
+
+.progress-bar {
+  background-color: #6431f1;
+}
+
+.progress {
+  --bs-progress-bar-color: #bfaaf9;
+  --bs-progress-bg: none;
+  background-color: #d8ccf6;
+}
+.form-form {
+  background-color: white;
+  padding: 20px 100px;
+  height: 70vh;
+  border-radius: 20px;
+}
+.form-label {
+  text-transform: capitalize;
+}
+.col-sm-6 {
+  margin-bottom: 20px;
+}
+.completed-table {
+  background-color: white;
+  width: 100%;
+}
+.recent-bookings-cont tr {
+  border-top: 1px solid rgb(223, 220, 220);
 }

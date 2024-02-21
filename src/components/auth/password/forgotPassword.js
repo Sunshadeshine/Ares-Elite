@@ -8,6 +8,8 @@ import BootstrapModal from "../../layout/Components/BootstrapModal";
 import AuthLayout from "../AuthLayout";
 
 const ForgotPassword = () => {
+  const navigate = useNavigate();
+
   const [showModal, setShowModal] = useState(false);
   const [email, setEmail] = useState("");
   const dispatch = useDispatch();
@@ -18,22 +20,32 @@ const ForgotPassword = () => {
     }
   };
   const handleClose = () => setShowModal(false);
-
+  const handleGoBack = () => {
+    navigate(-1); // Go back one step in the history
+  };
   return (
     <AuthLayout>
       <section className="forgot-password">
+        <button onClick={handleGoBack} className="m-0 p-0 mb-4">
+          <img src="images/icon/back.svg" alt="back" width={30} />
+        </button>
         <h3 className="mb-4 font-weight-bold">Forgot Password</h3>
-        <p className="mb-1 mt-4 email ml-1">
-          Email to send reset instructions to
+        <p className="mb-1 mt-4 email  text-muted">
+          Don't worry! It occurs. Please enter the email Email to send
+          <br />
+          Verification code.{" "}
         </p>
-        <Form.Control
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-          className="mb-3 "
-        />
+        <Form.Group controlId="formBasicPassword" className="mt-2">
+          <Form.Label>Email Id</Form.Label>
+          <Form.Control
+            type="email"
+            name="email"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            className="mb-3 mt-2"
+          />
+        </Form.Group>
         {isFetching ? (
           <Button type="submit" className="purple-button w-100">
             <Spinner animation="border" variant="light" />
@@ -44,13 +56,7 @@ const ForgotPassword = () => {
           </Button>
         )}
       </section>
-      <section className="illustration-container">
-        <img
-          src="images/ForgotPassword.png"
-          className="illustration"
-          style={{ width: "300px", height: "auto" }}
-        />
-      </section>
+
       {email.length > 0 && (
         <BootstrapModal
           showModal={showModal}

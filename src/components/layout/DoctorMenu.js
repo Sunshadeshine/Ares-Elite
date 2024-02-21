@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, Row } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { BottomNavigation } from "reactjs-bottom-navigation";
 import { logOut } from "../../features/authSlice";
 
@@ -9,6 +9,7 @@ const DoctorMenu = ({ children }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleItemClick = (itemName) => {
     setSelectedItem(itemName);
@@ -31,34 +32,21 @@ const DoctorMenu = ({ children }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    // Extracting the current URL path after the base URL
+    const currentPath = location.pathname.replace("/doctor/dashboard", "");
+
+    // Finding the matching navigation item based on the current URL path
+    const matchedItem = navigationMenu.find((item) => item.to === currentPath);
+
+    // Setting the selected item based on the match
+    if (matchedItem) {
+      setSelectedItem(matchedItem.itemName);
+    }
+  }, [location.pathname]);
+
   const isMobile = windowDimension <= 640;
-  const navigationMenu = [
-    {
-      itemName: "Home",
-      iconPath: "/images/icons/home.svg",
-      to: "/doctor/dashboard",
-    },
-    {
-      itemName: "Recent Bookings",
-      iconPath: "/images/icons/calender.svg",
-      to: "/doctor/dashboard/recent-bookings",
-    },
-    {
-      itemName: "Recent Evaluation",
-      iconPath: "/images/icons/list-check.svg",
-      to: "/doctor/dashboard/recent-evaluation2",
-    },
-    {
-      itemName: "Recent Prescription",
-      iconPath: "/images/icons/file-lines.svg",
-      to: "/doctor/dashboard/recent-prescription",
-    },
-    {
-      itemName: "Profile",
-      iconPath: "/images/icons/user.svg",
-      to: "/doctor/dashboard/profile",
-    },
-  ];
+
   const BottomMenu = [
     {
       title: "Home",
@@ -88,9 +76,10 @@ const DoctorMenu = ({ children }) => {
   ];
   const bottomNavItems = BottomMenu.map((item) => ({
     title: item.title,
-    onClick: () => navigate(item.to), // Fix: Wrap the function in another function
+    onClick: () => navigate(item.to),
     icon: <img src={item.icon} />,
   }));
+
   return (
     <>
       <div>
@@ -112,35 +101,76 @@ const DoctorMenu = ({ children }) => {
           ) : (
             <div className="doctor-menu-cont">
               <main className="w-100 h-100 doctor-menu text-center text-secondary">
-                <div>
+                <div style={{ height: "130px" }}>
                   <img
-                    src="/images/DoctorMenuLogo.png
-              "
+                    src="/images/DoctorMenuLogo.png"
                     alt="logo"
+                    width={130}
                     className="menu-logo"
                   />
-                  {/* <img
-                    src="/images/Logo.png"
-                    alt="logo"
-                    width={60}
-                    className="menu-logo-collapse"
-                  /> */}
                 </div>
-                <ul className="list-unstyled text-start ">
-                  {navigationMenu.map((item, index) => (
-                    <NavigationItem
-                      key={index}
-                      itemName={item.itemName}
-                      iconPath={item.iconPath}
-                      to={item.to}
-                      handleItemClick={() => handleItemClick(item.itemName)}
-                      isSelected={selectedItem === item.itemName}
-                    />
-                  ))}
-                </ul>
+                <div
+                  className="list-group text-left mt-5 "
+                  style={{ marginLeft: "9px" }}
+                >
+                  <Link
+                    to="/doctor/dashboard"
+                    className="list-group-item list-group-item-action"
+                  >
+                    <div className="menu-icon-cont">
+                      <img src="/images/icons/home.svg " className="icons" />
+                    </div>
+                    Home
+                  </Link>
+                  <NavLink
+                    to="/doctor/dashboard/recent-bookings"
+                    className="list-group-item list-group-item-action "
+                  >
+                    <div className="menu-icon-cont">
+                      <img
+                        src="/images/icons/calender.svg "
+                        className="icons"
+                      />
+                    </div>
+                    Recent Bookings
+                  </NavLink>
+                  <NavLink
+                    to="/doctor/dashboard/recent-evaluation2"
+                    className="list-group-item list-group-item-action"
+                  >
+                    <div className="menu-icon-cont">
+                      <img
+                        src="/images/icons/list-check.svg"
+                        className="icons"
+                      />
+                    </div>
+                    Recent Evaluation
+                  </NavLink>
+                  <NavLink
+                    to="/doctor/dashboard/recent-prescription"
+                    className="list-group-item list-group-item-action"
+                  >
+                    <div className="menu-icon-cont">
+                      <img
+                        src="/images/icons/file-lines.svg "
+                        className="icons"
+                      />
+                    </div>
+                    Recent Prescription
+                  </NavLink>
+                  <NavLink
+                    to="/doctor/dashboard/profile"
+                    className="list-group-item list-group-item-action"
+                  >
+                    <div className="menu-icon-cont">
+                      <img src="/images/icons/user.svg " className="icons" />
+                    </div>
+                    Profile
+                  </NavLink>
+                </div>
                 <NavLink
                   className="text-left position-absolute  "
-                  style={{ bottom: "30px" }}
+                  style={{ bottom: "30px", left: "10px" }}
                 >
                   <div>
                     <i className="fa fa-sign-out" aria-hidden="true" />
@@ -159,14 +189,11 @@ const DoctorMenu = ({ children }) => {
           <div
             className="children-cont"
             style={{
-              backgroundColor: "#F2F8FD",
               padding: "0px",
             }}
-            // style={{ backgroundColor: "#F2F8FD", padding: "0px" }}
           >
             <div className="vh-100 p-0">
               <main>{children}</main>
-              {/* <ToastContainer position="top-center" /> */}
             </div>
           </div>
         </Row>
@@ -176,21 +203,61 @@ const DoctorMenu = ({ children }) => {
 };
 
 export default DoctorMenu;
-const NavigationItem = ({
-  itemName,
-  iconPath,
-  to,
-  handleItemClick,
-  isSelected,
-}) => {
-  return (
-    <li className={isSelected ? "selected" : ""}>
-      <Link to={to} onClick={handleItemClick} className="d-flex">
-        <div className="menu-icon-cont">
-          <img src={iconPath} alt={itemName} className="icons" />
-        </div>
-        <span className="menu-list-items">{itemName}</span>
-      </Link>
-    </li>
-  );
-};
+
+// const NavigationItem = ({
+//   itemName,
+//   iconPath,
+//   to,
+//   handleItemClick,
+//   isSelected,
+// }) => {
+//   return (
+//     <li className={isSelected ? "selected" : ""}>
+//       <Link to={to} onClick={handleItemClick} className="d-flex">
+//         <div className="menu-icon-cont">
+//           <img src={iconPath} alt={itemName} className="icons" />
+//         </div>
+//         <span className="menu-list-items">{itemName}</span>
+//       </Link>
+//     </li>
+//   );
+// };
+{
+  /* {navigationMenu.map((item, index) => (
+                    <NavigationItem
+                      key={index}
+                      itemName={item.itemName}
+                      iconPath={item.iconPath}
+                      to={item.to}
+                      handleItemClick={() => handleItemClick(item.itemName)}
+                      isSelected={selectedItem === item.itemName}
+                    />
+                  ))} */
+}
+const navigationMenu = [
+  {
+    itemName: "Home",
+    iconPath: "/images/icons/home.svg",
+    to: "/doctor/dashboard",
+  },
+  {
+    itemName: "Recent Bookings",
+    iconPath: "/images/icons/calender.svg",
+    to: "/doctor/dashboard/recent-bookings",
+  },
+  {
+    itemName: "Recent Evaluation",
+    iconPath: "/images/icons/list-check.svg",
+    to: "/doctor/dashboard/recent-evaluation2",
+  },
+  {
+    itemName: "Recent Prescription",
+    iconPath: "/images/icons/file-lines.svg",
+    to: "/doctor/dashboard/recent-prescription",
+  },
+  {
+    itemName: "Profile",
+    iconPath: "/images/icons/user.svg",
+    to: "/doctor/dashboard/profile",
+  },
+];

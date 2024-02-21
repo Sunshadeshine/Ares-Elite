@@ -367,11 +367,21 @@ const DoctorTodayAppointment = () => {
   return (
     <>
       <section
-        className="today-appoint-container bg-white "
-        style={{ gap: "24px", width: "40vw", margin: "70px 30px" }}
+        style={{
+          background: "white",
+          width: "47%",
+          height: "100%",
+          borderRadius: "20px",
+        }}
+        className="p-4"
       >
-        <div className="d-flex justify-content-center w-100 mb-4">
-          <h5>Today's Appointments</h5>
+        <div className="d-flex justify-content-center w-100 mb-4 ">
+          <div className="w-100 d-flex justify-content-between flex-row">
+            <h5>Today's Appointments</h5>
+            <NavLink className="purple-text">View All</NavLink>
+          </div>
+
+          <hr />
           {appointments && appointments.length > visibleAppointments && (
             <NavLink className="view-all">View All</NavLink>
           )}
