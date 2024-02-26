@@ -19,7 +19,7 @@ const RecentBookings = () => {
 
   let pageSize;
   if (isLargeDesktop) {
-    pageSize = 13;
+    pageSize = 10;
   } else if (isDesktop) {
     pageSize = 8;
   } else {

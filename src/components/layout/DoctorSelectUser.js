@@ -152,7 +152,7 @@ const SucessContent = ({ handleVerification, className }) => {
             className="mb-3 "
           />
           <div className="d-flex">
-            <button type="submit" className="bt-2 w-50 bt-3">
+            <button type="submit" className="bt-4 w-50 bt-5">
               {isFetching ? (
                 <>
                   <Spinner size="sm" animation="border" />
@@ -161,7 +161,7 @@ const SucessContent = ({ handleVerification, className }) => {
                 <>Verify</>
               )}
             </button>{" "}
-            <button type="button" className="bt-2 w-50">
+            <button type="button" className="bt-6 w-50">
               Cancel
             </button>
           </div>

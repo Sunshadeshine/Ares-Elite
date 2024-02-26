@@ -13,6 +13,7 @@ import DoctorPlansPackages from "./pages/DoctorPlansPackages";
 import DoctorProfile from "./pages/DoctorProfile";
 import DoctorServiceSelection from "./pages/DoctorServiceSelection";
 // import Step1 from "./pages/Forms/Client Information/Step1";
+import EditProfile from "./components/layout/EditProfile";
 import Athedrill from "./pages/Athedrill";
 import DoctorExpandAppointments from "./pages/DoctorExpandAppointments";
 import Drill from "./pages/Drill";
@@ -52,6 +53,7 @@ function App() {
             />
             <Route path="dashboard/client_form" element={<Client_Form />} />
             <Route path="dashboard/profile" element={<DoctorProfile />} />
+            <Route path="dashboard/edit-profile" element={<EditProfile />} />
             <Route
               path="dashboard/doctor-service-selection"
               element={<DoctorServiceSelection />}

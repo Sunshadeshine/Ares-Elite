@@ -203,9 +203,6 @@ const CompletedRequests = () => {
           </table>
         </div>
       </div>
-      {/* <div className="pag-cont">
-        <Pagination className="m-auto ">{renderPaginationItems()}</Pagination>
-      </div> */}
     </>
   );
 };

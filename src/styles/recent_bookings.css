@@ -54,7 +54,7 @@ thead th {
 .recent-booking-head {
   background-color: white;
   padding: 20px 0px 5px 10px;
-  border-radius: 20px 20px 0px 0px;
+  border-radius: 20px 20px 20px 20px;
 }
 .action {
   text-align: center;
@@ -115,10 +115,7 @@ tbody {
   color: white;
   width: 120px !important;
 }
-.main-wrapper table tbody tr:hover + tr {
-  background-color: rgb(28, 14, 68, 0.2) !important;
-  color: white !important;
-}
+
 .main-wrapper table thead tr th {
   color: rgb(0, 0, 0) !important;
   padding: 0 !important;
@@ -205,17 +202,15 @@ tbody {
     padding: 20px 0px;
   }
   .frame {
-    width: 80%;
+    width: 95%;
     margin: auto;
     /* box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; */
     border-radius: 20px 20px 0px 0px;
     height: 80vh;
   }
-  .buttons-cont {
-    width: 80% !important;
-  }
+
   .search-bar {
-    width: 30% !important;
+    width: 40% !important;
   }
 }
 .no-details {

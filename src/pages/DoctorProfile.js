@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactPlaceholder from "react-placeholder";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import DoctorMenu from "../components/layout/DoctorMenu";
 import { GetProfileDetails } from "../features/apiCall";
 import { logOut } from "../features/authSlice";
@@ -31,121 +32,86 @@ const DoctorProfile = () => {
   }, [dispatch]);
   return (
     <DoctorMenu>
-      <div className=" m-4 profile">
+      <div className="m-4 profile">
         <section
           className="p-4  "
-          style={{ backgroundColor: "white", margin: "auto" }}
+          style={{ backgroundColor: "white", margin: "auto", height: "95vh" }}
         >
-          <div className="d-flex ">
-            <img
-              src="/images/image3.png"
-              height={50}
-              style={{ borderRadius: "50%", marginRight: "30px" }}
-            />
+          <h4> Profile</h4>
+          <div
+            className="p-4 prof-cont"
+            style={{ alignItems: "center", backgroundColor: "#F4F4F4" }}
+          >
+            <div className="d-flex align-items-center">
+              <img
+                src="/images/image3.png"
+                height={150}
+                style={{ borderRadius: "50%", marginRight: "40px" }}
+              />
+              <div>
+                <ReactPlaceholder
+                  type="text"
+                  color="#F0F0F0"
+                  showLoadingAnimation
+                  rows={1}
+                  style={{ width: "30%" }}
+                  ready={!isFetching}
+                >
+                  <h5>{user?.fullname}</h5>
+                  <div style={{ color: "rgb(134 131 131)" }}>
+                    <p>{user?.email}</p>
+                    <p>234326723523</p>
+                  </div>
+                </ReactPlaceholder>
+              </div>
+            </div>
             <div>
-              <ReactPlaceholder
-                type="text"
-                color="#F0F0F0"
-                showLoadingAnimation
-                rows={1}
-                style={{ width: "30%" }}
-                ready={!isFetching}
-              >
-                <h6>{user?.fullname}</h6>
-                <p>{user?.email}</p>
-              </ReactPlaceholder>
+              <img src />
             </div>
           </div>
-          <div className="d-flex justify-content-between mt-4">
-            <p>Name</p>
-            <ReactPlaceholder
-              type="text"
-              color="#F0F0F0"
-              showLoadingAnimation
-              rows={1}
-              style={{ width: "80%" }}
-              ready={!isFetching}
-            >
-              <span>{user?.fullname}</span>
-            </ReactPlaceholder>
-          </div>
-          <hr />
-          <h5 className="mt-4 mb-3">Account security</h5>
-          <div className="d-flex justify-content-between prof-cont">
-            <p>Email</p>
-            <ReactPlaceholder
-              type="text"
-              color="#F0F0F0"
-              showLoadingAnimation
-              rows={1}
-              style={{ width: "80%" }}
-              ready={!isFetching}
-            >
-              {" "}
-              <span>{user?.email}</span>
-            </ReactPlaceholder>
-          </div>
-          <div className=" prof-cont">
-            <p>Change Password</p>
-            <span>Change password to login to your account.</span>
-          </div>
-          {/* <div className="d-flex justify-content-between prof-cont">
-            <div>
-              <p>2-step verification</p>
-              <span>
-                Add an additional layer of security to your account during
-                login.
-              </span>
+          <Link to="/doctor/dashboard/edit-profile">
+            <div className=" prof-cont">
+              <div>
+                <p>Edit Profile</p>
+                <span>you can edit you all information from here</span>
+              </div>
+              <div>
+                <img src="/images/icons/arrow-left.svg" />
+              </div>
             </div>
-            <div>
-              <Form>
-                <div className="d-flex align-items-center">
-                  <span className="me-2">{isChecked ? "On" : "Off"}</span>
-                  <Form.Check
-                    type="switch"
-                    id="toggle-switch"
-                    label=""
-                    checked={isChecked}
-                    onChange={handleToggle}
-                  />
-                </div>
-              </Form>
-            </div>
-          </div> */}
-          <h5 className="mb-3 mt-4">Support</h5>
-          {/* <div className="d-flex justify-content-between prof-cont">
-            <div>
-              <p>Support Access</p>
-              <span>
-                Grant Ares Elite App support temporary access to your account so
-                we can troubleshoot problems or recover content on your behalf.
-                You can revoke access at any time.
-              </span>
-            </div>
-            <div>
-              <Form>
-                <div className="d-flex align-items-center">
-                  <span className="me-2">{isChecked ? "On" : "Off"}</span>
-                  <Form.Check
-                    type="switch"
-                    id="toggle-switch"
-                    label=""
-                    checked={isChecked}
-                    onChange={handleToggle}
-                  />
-                </div>
-              </Form>
-            </div>
-          </div> */}
+          </Link>
           <div className="prof-cont">
-            <p>Privacy Policy</p>
-            <span>View the privacy policy </span>
+            <div>
+              <p>Change Password</p>
+              <span>Change password to login to your account.</span>
+            </div>
+            <div>
+              <img src="/images/icons/arrow-left.svg" />
+            </div>
           </div>
-          <div className="prof-cont">
-            <p>Terms of use</p>
-            <span>View the terms of use </span>
-          </div>
-          <div className="prof-cont ">
+          <Link to="/privacy-policy">
+            <div className="prof-cont">
+              <div>
+                <p>Privacy Policy</p>
+                <span>View the privacy policy </span>
+              </div>
+              <div>
+                <img src="/images/icons/arrow-left.svg" />
+              </div>
+            </div>
+          </Link>
+          <Link to="/terms-of-use">
+            <div className="prof-cont">
+              <div>
+                <p>Terms of use</p>
+                <span>View the terms of use </span>{" "}
+              </div>
+              <div>
+                <img src="/images/icons/arrow-left.svg" />
+              </div>
+            </div>
+          </Link>
+          <div className="pl-4 ">
             <button className="text-danger p-0" onClick={handleLogout}>
               Log out
             </button>
