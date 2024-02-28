@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, Spinner } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { VerifyAthelete } from "../../features/apiCall";
@@ -103,7 +103,7 @@ const DoctorSelectUser = () => {
               <Button
                 type="submit"
                 className="purple-button "
-                style={{ width: "332px", height: "62px", marginTop: "26px" }}
+                style={{ width: "400px", height: "60px", marginTop: "0px" }}
                 disabled={!selectedUserType}
               >
                 Continue
@@ -142,7 +142,11 @@ const SucessContent = ({ handleVerification, className }) => {
             Please enter email to verify a existing user{" "}
           </p>
         </div>
-        <Form onSubmit={handleSubmit}>
+        <Form
+          onSubmit={handleSubmit}
+          className="m-auto"
+          style={{ width: "400px" }}
+        >
           <Form.Control
             type="email"
             name="email"
@@ -150,21 +154,37 @@ const SucessContent = ({ handleVerification, className }) => {
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             className="mb-3 "
+            style={{ height: "60px" }}
           />
-          <div className="d-flex">
-            <button type="submit" className="bt-4 w-50 bt-5">
-              {isFetching ? (
-                <>
-                  <Spinner size="sm" animation="border" />
-                </>
-              ) : (
-                <>Verify</>
-              )}
-            </button>{" "}
-            <button type="button" className="bt-6 w-50">
-              Cancel
-            </button>
-          </div>
+          {/* <div className="d-flex"> */}
+          {/* <button type="submit" className="bt-4 w-100 bt-5">
+            {isFetching ? (
+              <>
+                <Spinner size="sm" animation="border" />
+              </>
+            ) : (
+              <>Verify</>
+            )}
+          </button>{" "}
+          <button type="button" className="bt-6 w-100">
+            Cancel
+          </button> */}
+          <button
+            type="submit"
+            className="purple-button p-0"
+            style={{ width: "400px", height: "58px", marginTop: "26px" }}
+          >
+            Verify
+          </button>
+          <button
+            type="submit"
+            className="purple-button-2 p-0"
+            style={{ width: "400px", height: "58px", marginTop: "15px" }}
+          >
+            Cancel
+          </button>
+
+          {/* </div> */}
         </Form>
       </section>
     </>
