@@ -65,18 +65,24 @@
 .doctor-menu .list-group-item {
   border: 0px;
   margin-left: 0px;
-  padding-left: 0px;
+  margin-bottom: 10px;
   color: white;
-  font-weight: 500;
+  font-weight: 300;
+  padding: 10px 10px 10px 10px;
+  border-radius: 10px;
+  font-size: 15px;
 }
 .doctor-menu .list-group-item.active {
-  color: white;
-  /* font-weight: 700; */
+  color: #7257ff !important;
+  font-weight: 500;
   border-bottom: 1px solid white;
-  background-color: transparent;
+  background-color: white;
+  padding: 10px 10px 10px 10px;
+  border-radius: 10px;
 }
 
 .menu-list-items {
+  color: white;
   margin: auto;
   white-space: nowrap;
   visibility: visible;
@@ -498,7 +504,7 @@ a:hover {
   color: #7257ff;
 }
 .client-form {
-  width: 90%;
+  width: 96%;
   margin: auto;
 }
 .client-form .text-black {
@@ -568,7 +574,11 @@ body {
     padding: 0px;
     margin: 0px;
   }
+  .doctor-menu-cont {
+    display: none !important;
+  }
   .bottom-nav {
+    display: flex !important;
     background-color: #1c0d44 !important;
     color: white;
     width: 100vw;
@@ -766,8 +776,20 @@ fieldset:disabled .btn {
 
   z-index: -1;
 }
-.background-auth {
-  position: relative;
+.background-auth-2::before {
+  background-image: url("../assets/forgot\ pass.png");
+  background-position: top; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+  /* opacity: 0.3; */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  z-index: -1;
 }
 
 .sign-in-container {
@@ -945,4 +967,7 @@ fieldset:disabled .btn {
 .appointment p {
   font-size: 10px !important;
   font-weight: 600;
+}
+.bottom-nav {
+  display: none;
 }

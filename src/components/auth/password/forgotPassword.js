@@ -25,49 +25,51 @@ const ForgotPassword = () => {
   };
   return (
     <AuthLayout>
-      <section className="forgot-password">
-        <button onClick={handleGoBack} className="m-0 p-0 mb-4">
-          <img src="images/icon/back.svg" alt="back" width={30} />
-        </button>
-        <h3 className="mb-4 font-weight-bold">Forgot Password</h3>
-        <p className="mb-1 mt-4 email  text-muted">
-          Don't worry! It occurs. Please enter the email Email to send
-          <br />
-          Verification code.{" "}
-        </p>
-        <Form.Group controlId="formBasicPassword" className="mt-2">
-          <Form.Label>Email Id</Form.Label>
-          <Form.Control
-            type="email"
-            name="email"
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            className="mb-3 mt-2"
+      <div className="background-auth-2">
+        <section className="forgot-password">
+          <button onClick={handleGoBack} className="m-0 p-0 mb-4">
+            <img src="images/icon/back.svg" alt="back" width={30} />
+          </button>
+          <h3 className="mb-4 font-weight-bold">Forgot Password</h3>
+          <p className="mb-1 mt-4 email  text-muted">
+            Don't worry! It occurs. Please enter the email Email to send
+            <br />
+            Verification code.{" "}
+          </p>
+          <Form.Group controlId="formBasicPassword" className="mt-2">
+            <Form.Label>Email Id</Form.Label>
+            <Form.Control
+              type="email"
+              name="email"
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              className="mb-3 mt-2"
+            />
+          </Form.Group>
+          {isFetching ? (
+            <Button type="submit" className="purple-button w-100">
+              <Spinner animation="border" variant="light" />
+            </Button>
+          ) : (
+            <Button className="purple-button w-100" onClick={handleSendOtp}>
+              Next
+            </Button>
+          )}
+        </section>
+
+        {email.length > 0 && (
+          <BootstrapModal
+            showModal={showModal}
+            handleClose={handleClose}
+            modalTitle={""}
+            modalContent={<ModalContent email={email} />}
+            // className="check_your_modal_container"
           />
-        </Form.Group>
-        {isFetching ? (
-          <Button type="submit" className="purple-button w-100">
-            <Spinner animation="border" variant="light" />
-          </Button>
-        ) : (
-          <Button className="purple-button w-100" onClick={handleSendOtp}>
-            Next
-          </Button>
         )}
-      </section>
 
-      {email.length > 0 && (
-        <BootstrapModal
-          showModal={showModal}
-          handleClose={handleClose}
-          modalTitle={""}
-          modalContent={<ModalContent email={email} />}
-          // className="check_your_modal_container"
-        />
-      )}
-
-      <ToastContainer position="top-center" />
+        <ToastContainer position="top-center" />
+      </div>
     </AuthLayout>
   );
 };

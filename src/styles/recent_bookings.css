@@ -34,7 +34,11 @@ thead th {
   color: #000001;
   opacity: 0.3;
 }
-
+#logo {
+  position: absolute;
+  top: 20px;
+  left: 40px;
+}
 .main-wrapper table thead tr th {
   font-weight: 800;
 }
@@ -52,6 +56,8 @@ thead th {
   font-size: 28px;
 }
 .recent-booking-head {
+  height: 95vh;
+  overflow: scroll;
   background-color: white;
   padding: 20px 0px 5px 10px;
   border-radius: 20px 20px 20px 20px;

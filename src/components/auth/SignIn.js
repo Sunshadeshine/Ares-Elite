@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, FormCheck, InputGroup, Spinner } from "react-bootstrap";
+import { Button, Form, InputGroup, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { login } from "../../features/apiCall";
@@ -62,57 +62,58 @@ const SignIn = () => {
   // }, [error, isFetching, isLoogedIn, errMsg]);
   return (
     <AuthLayout>
-      <section className="illustration-container d-none">
-        <img
-          src="images/UpdatePassword.png"
-          className="illustration"
-          style={{ width: "auto", height: "200px" }}
-        />
-      </section>
-      <h6 className="text-secondary">Welcome !</h6>
-      <Form onSubmit={handleSubmit} style={{ width: "407px" }}>
-        <h3 className="mb-5 font-weight-bold">Log in for Ares Elite</h3>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            name="email"
-            placeholder="Enter your email"
-            onChange={handleChange}
-            value={values.email}
-            className="mb-3 mt-2"
+      <div className="background-auth">
+        <section className="illustration-container d-none ">
+          <img
+            src="images/UpdatePassword.png"
+            className="illustration"
+            style={{ width: "auto", height: "200px" }}
           />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <InputGroup>
+        </section>
+        <h6 className="text-secondary">Welcome !</h6>
+        <Form onSubmit={handleSubmit} style={{ width: "407px" }}>
+          <h3 className="mb-5 font-weight-bold">Log in for Ares Elite</h3>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
             <Form.Control
-              type={values.showPassword ? "text" : "password"}
-              name="password"
-              placeholder="Enter your password"
+              type="email"
+              name="email"
+              placeholder="Enter your email"
               onChange={handleChange}
-              value={values.password}
+              value={values.email}
               className="mb-3 mt-2"
             />
+          </Form.Group>
 
-            <NavLink className="password-eye" onClick={handleTogglePassword}>
-              {values.showPassword ? (
-                <i className="fa fa-eye-slash " />
-              ) : (
-                <i className="fa-solid fa-eye" />
-              )}
-            </NavLink>
-          </InputGroup>
-        </Form.Group>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <InputGroup>
+              <Form.Control
+                type={values.showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Enter your password"
+                onChange={handleChange}
+                value={values.password}
+                className="mb-3 mt-2"
+              />
 
-        <NavLink
-          className="d-block w-100 text-right mb-2 text-decoration-none purple-text"
-          to="/forgot-password"
-        >
-          Forgot Password ?
-        </NavLink>
-        <FormCheck
+              <NavLink className="password-eye" onClick={handleTogglePassword}>
+                {values.showPassword ? (
+                  <i className="fa fa-eye-slash " />
+                ) : (
+                  <i className="fa-solid fa-eye" />
+                )}
+              </NavLink>
+            </InputGroup>
+          </Form.Group>
+
+          <NavLink
+            className="d-block w-100 text-right mb-2 text-decoration-none purple-text"
+            to="/forgot-password"
+          >
+            Forgot Password ?
+          </NavLink>
+          {/* <FormCheck
           type="checkbox"
           id="default-checkbox"
           label={
@@ -124,18 +125,18 @@ const SignIn = () => {
             </span>
           }
           className="mb-4 mt-4"
-        />
+        /> */}
 
-        {isFetching ? (
-          <Button type="submit" className="purple-button w-100">
-            <Spinner animation="border" variant="light" />
-          </Button>
-        ) : (
-          <Button type="submit" className="purple-button w-100">
-            Login
-          </Button>
-        )}
-        {/* <Link to="/signup">
+          {isFetching ? (
+            <Button type="submit" className="purple-button w-100 mt-4">
+              <Spinner animation="border" variant="light" />
+            </Button>
+          ) : (
+            <Button type="submit" className="purple-button w-100 mt-4">
+              Login
+            </Button>
+          )}
+          {/* <Link to="/signup">
           <p
             className="position-relative bottom text-center"
             style={{ top: "20vh" }}
@@ -144,7 +145,8 @@ const SignIn = () => {
             <span className="color-purple font-weight-bold">{"  "}Sign up</span>
           </p>{" "}
         </Link> */}
-      </Form>
+        </Form>
+      </div>
     </AuthLayout>
   );
 };

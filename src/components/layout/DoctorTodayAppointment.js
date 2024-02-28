@@ -372,6 +372,7 @@ const DoctorTodayAppointment = () => {
           width: "47%",
           height: "100%",
           borderRadius: "20px",
+          overflowY: "hidden",
         }}
         className="p-4"
       >

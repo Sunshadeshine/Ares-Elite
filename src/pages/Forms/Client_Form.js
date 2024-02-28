@@ -81,7 +81,7 @@ const Client_Form = () => {
   };
 
   const totalSteps = 3; // Total number of steps
-  const labels = ["New User", "Client Information", "Account Created"]; // Labels for each step
+  const labels = ["New User", "Personal Information", "Account Created"]; // Labels for each step
 
   return (
     <DoctorMenu>
@@ -97,8 +97,12 @@ const Client_Form = () => {
         ) : (
           <Form
             onSubmit={handleSubmit}
-            className="mt-4 p-4 pt-3  "
-            style={{ backgroundColor: "white", borderRadius: "20px" }}
+            className="mt-4  pt-3  "
+            style={{
+              backgroundColor: "white",
+              borderRadius: "20px",
+              padding: "10px 50px ",
+            }}
           >
             <Row>
               <Col md={4}>

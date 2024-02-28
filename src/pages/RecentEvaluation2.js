@@ -106,12 +106,12 @@ const RecentEvaluation2 = () => {
                   </Dropdown>
                 </div>
               </div>
+              {activeTab === "InQueue" ? (
+                <InQueueReuests />
+              ) : (
+                <CompletedRequests />
+              )}
             </div>
-            {activeTab === "InQueue" ? (
-              <InQueueReuests />
-            ) : (
-              <CompletedRequests />
-            )}
           </div>
         </div>{" "}
       </div>

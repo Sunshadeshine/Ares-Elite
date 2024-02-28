@@ -35,7 +35,12 @@ const DoctorProfile = () => {
       <div className="m-4 profile">
         <section
           className="p-4  "
-          style={{ backgroundColor: "white", margin: "auto", height: "95vh" }}
+          style={{
+            backgroundColor: "white",
+            margin: "auto",
+            height: "95vh",
+            overflowY: "scroll",
+          }}
         >
           <h4> Profile</h4>
           <div
