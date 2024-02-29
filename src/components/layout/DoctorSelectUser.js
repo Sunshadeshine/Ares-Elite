@@ -52,6 +52,8 @@ const DoctorSelectUser = () => {
           <SucessContent
             handleVerification={handleVerification}
             className="verification-athelete"
+            success={success}
+            setSuccess={setSuccess}
           />
         ) : (
           <>
@@ -118,18 +120,33 @@ const DoctorSelectUser = () => {
 
 export default DoctorSelectUser;
 
-const SucessContent = ({ handleVerification, className }) => {
+const SucessContent = ({
+  handleClose,
+  handleVerification,
+  className,
+  success,
+  setSuccess,
+}) => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const { isFetching } = useSelector((state) => state.auth);
-  const handleSubmit = (e) => {
+  const [verificationStarted, setVerificationStarted] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    handleVerification(email);
+    if (email.trim() !== "") {
+      setVerificationStarted(true);
+      await handleVerification(email);
+    }
   };
   const handleGoBack = () => {
-    navigate(-1);
+    setSuccess(false);
   };
 
+  const handleCancel = () => {
+    // Handle cancel action, stop verification
+    setVerificationStarted(false);
+  };
   return (
     <>
       <button onClick={handleGoBack} className="m-2 p-0 mb-4 " id="back_bt">
@@ -176,16 +193,16 @@ const SucessContent = ({ handleVerification, className }) => {
           >
             Verify
           </button>
-          <button
-            type="submit"
-            className="purple-button-2 p-0"
-            style={{ width: "400px", height: "58px", marginTop: "15px" }}
-          >
-            Cancel
-          </button>
 
           {/* </div> */}
         </Form>
+        <button
+          onClick={handleCancel}
+          className="purple-button-2 p-0"
+          style={{ width: "400px", height: "58px", marginTop: "15px" }}
+        >
+          Cancel
+        </button>
       </section>
     </>
   );

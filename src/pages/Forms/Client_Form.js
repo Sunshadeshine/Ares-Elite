@@ -85,7 +85,7 @@ const Client_Form = () => {
 
   return (
     <DoctorMenu>
-      <div className="mt-4 client-form">
+      <div className="mt-4 client-form ">
         <h1 className="text-center">Client Information</h1>
         <HorizontalTimeline
           currentStep={currentStep}
@@ -290,7 +290,16 @@ const SucessContent = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="text-center" style={{ marginTop: "10vh" }}>
+    <section
+      className="text-center d-flex flex-column flex-wrap align-content-center justify-content-center mt-4"
+      style={{
+        height: "75vh",
+
+        backgroundColor: "white",
+        borderRadius: "20px",
+        padding: "10px 50px ",
+      }}
+    >
       <img
         src="/images/icons/formTick.svg"
         alt="payment-icon"

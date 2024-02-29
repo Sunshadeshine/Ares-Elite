@@ -332,8 +332,8 @@ const DoctorTodayAppointment = () => {
       client: {
         _id: "65a77a0e93616e8547293875",
         client_id: "029152",
-        first_name: "sd",
-        last_name: "sd",
+        first_name: "Ms.Charu ",
+        last_name: "Patel",
         suffix: "sd",
       },
       doctor_trainer: "Dr. Wilson",
@@ -352,8 +352,8 @@ const DoctorTodayAppointment = () => {
       client: {
         _id: "65a77a0e93616e8547293875",
         client_id: "029152",
-        first_name: "sd",
-        last_name: "sd",
+        first_name: "Mr.Surya",
+        last_name: "Reddy",
         suffix: "sd",
       },
       doctor_trainer: "Dr. Adams",
@@ -397,7 +397,7 @@ const DoctorTodayAppointment = () => {
           >
             <tr>
               <td>Name</td>
-              <td>
+              <td className="pl-">
                 Service
                 <i className="fa-solid fa-filter m-1" />
               </td>
@@ -408,7 +408,7 @@ const DoctorTodayAppointment = () => {
           <tbody>
             {Object.values(appointments).length > 0 &&
               Object.values(appointments).map((appointment) => (
-                <tr key={appointment.appointment_id}>
+                <tr key={appointment.appointment_id} className="table-row-app">
                   <td>
                     <div className="d-flex ">
                       <Image
@@ -424,17 +424,19 @@ const DoctorTodayAppointment = () => {
                           {appointment.client.first_name}{" "}
                           {appointment.client.last_name}
                         </div>
-                        <div style={{ color: "grey" }}>
+                        <div style={{ color: "grey", fontSize: "14px" }}>
                           {/* {appointment.client.email} */}
                           charupatel@gmail.com
                         </div>
                       </div>
                     </div>
                   </td>
-                  <td className="m-auto">
-                    <p className="p-0 m-0">{appointment.service_type}</p>
+                  <td className="m-auto ">
+                    <p className="pl-3 m-0">{appointment.service_type}</p>
                   </td>
-                  <td>{appointment.app_time}</td>
+                  <td>
+                    <p>{appointment.app_time}</p>
+                  </td>
                 </tr>
               ))}
           </tbody>

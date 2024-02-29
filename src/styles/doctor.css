@@ -506,6 +506,8 @@ a:hover {
 .client-form {
   width: 96%;
   margin: auto;
+  overflow-y: scroll !important;
+  margin-bottom: 10px;
 }
 .client-form .text-black {
   font-weight: 600;

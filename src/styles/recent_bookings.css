@@ -46,6 +46,13 @@ thead th {
   color: #6174a5;
   font-size: 25px;
 }
+.table-row-app p {
+  padding: 12px 0px;
+  height: 100%;
+  font-size: 14px;
+  color: #434959;
+}
+
 .table i {
   color: #000000;
   font-size: 15px;
